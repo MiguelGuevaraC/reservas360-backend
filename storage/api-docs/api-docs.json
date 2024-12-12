@@ -1,0 +1,267 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API's Reservas & Delivery 360",
+        "description": "API's for transportation management",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/login": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtiene el usuario autenticado",
+                "operationId": "6c3d9301ce4ff25d7c652ee1fd8ac04c",
+                "responses": {
+                    "200": {
+                        "description": "Usuario encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reservas360-backend/public/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "description": "Authenticate user and generate access token",
+                "operationId": "9dfadbf387794eeab53be430d5b83231",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password",
+                                    "branchOffice_id"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "miguel@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User authenticated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "description": "token del usuario",
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        },
+                                        "menu": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Menú",
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "User not found or password incorrect",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Person": {
+                "title": "person",
+                "description": "Modelo de Persona",
+                "required": [
+                    "id",
+                    "typeofDocument",
+                    "documentNumber",
+                    "state"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID de la persona",
+                        "type": "integer"
+                    },
+                    "typeofDocument": {
+                        "description": "Tipo de documento de la persona",
+                        "type": "string"
+                    },
+                    "documentNumber": {
+                        "description": "Número de documento de la persona",
+                        "type": "string"
+                    },
+                    "names": {
+                        "description": "Nombres de la persona",
+                        "type": "string"
+                    },
+                    "fatherSurname": {
+                        "description": "Apellido paterno de la persona",
+                        "type": "string"
+                    },
+                    "motherSurname": {
+                        "description": "Apellido materno de la persona",
+                        "type": "string"
+                    },
+                    "businessName": {
+                        "description": "Nombre de la empresa de la persona",
+                        "type": "string"
+                    },
+                    "representativePersonDni": {
+                        "description": "DNI del representante de la persona",
+                        "type": "string"
+                    },
+                    "representativePersonName": {
+                        "description": "Nombre del representante de la persona",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Dirección de la persona",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Teléfono de la persona",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Correo electrónico de la persona",
+                        "type": "string"
+                    },
+                    "origin": {
+                        "description": "Lugar de origen de la persona",
+                        "type": "string"
+                    },
+                    "ocupation": {
+                        "description": "Ocupación de la persona",
+                        "type": "string"
+                    },
+                    "state": {
+                        "description": "Estado de la persona",
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación de la persona",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de actualización de la persona",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted_at": {
+                        "description": "Fecha de eliminación de la persona",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "miguel@gmail.com"
+                    },
+                    "person_id": {
+                        "description": "Person Id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "person": {
+                        "$ref": "#/components/schemas/Person"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Usuario",
+            "description": "Usuario"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}
