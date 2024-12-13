@@ -6,25 +6,259 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/login": {
+        "/reservas360-backend/public/api/searchByDni/{dni}": {
             "get": {
                 "tags": [
-                    "Usuario"
+                    "Search"
                 ],
-                "summary": "Obtiene el usuario autenticado",
-                "operationId": "6c3d9301ce4ff25d7c652ee1fd8ac04c",
+                "summary": "Search information by DNI",
+                "description": "Search information about a person by their DNI number.",
+                "operationId": "ebdaa5012e2055edb7a657e34bdaafb1",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI number of the person to search",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Usuario encontrado",
+                        "description": "Information found successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/User"
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "code": {
+                                                "type": "integer",
+                                                "example": 0
+                                            },
+                                            "dni": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "apepat": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "apemat": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "apcas": {
+                                                "type": "string",
+                                                "example": ""
+                                            },
+                                            "nombres": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "fecnac": {
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "ubigeo": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/searchByRuc/{ruc}": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Search information by RUC",
+                "description": "Search information about a person by their RUC number.",
+                "operationId": "ac63dacd923a57b34954e40e284eb0d0",
+                "parameters": [
+                    {
+                        "name": "ruc",
+                        "in": "path",
+                        "description": "RUC number of the person to search",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Information found successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "code": {
+                                                "type": "integer",
+                                                "example": 0
+                                            },
+                                            "RUC": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "RazonSocial": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "Direccion": {
+                                                "type": "string",
+                                                "example": "string"
+                                            },
+                                            "Tipo": {
+                                                "type": "string"
+                                            },
+                                            "Inscripcion": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/logout": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout",
+                "description": "Log out user.",
+                "operationId": "aaaa57c60a59d777d2be760aed4e1149",
+                "responses": {
+                    "200": {
+                        "description": "Successful logout"
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "An error occurred while trying to log out. Please try again later."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/reservas360-backend/public/api/login": {
@@ -75,13 +309,6 @@
                                         },
                                         "user": {
                                             "$ref": "#/components/schemas/User"
-                                        },
-                                        "menu": {
-                                            "type": "array",
-                                            "items": {
-                                                "description": "Menú",
-                                                "type": "object"
-                                            }
                                         }
                                     },
                                     "type": "object"
@@ -98,6 +325,157 @@
                                         "error": {
                                             "description": "Error message",
                                             "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/authenticate": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get Profile user",
+                "description": "Get user",
+                "operationId": "1742880bde53cf0faf48cc1a883ee814",
+                "responses": {
+                    "200": {
+                        "description": "User authenticated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/user": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Store a new user",
+                "description": "Create a new user",
+                "operationId": "4a71199d344741f75ee18577017977ed",
+                "requestBody": {
+                    "description": "User data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "email",
+                                        "type": "string",
+                                        "example": "guevaracajusolmiguel"
+                                    },
+                                    "password": {
+                                        "description": "Password",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "person_id": {
+                                        "description": "Person ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Some fields are required."
                                         }
                                     },
                                     "type": "object"
@@ -256,12 +634,16 @@
     },
     "tags": [
         {
-            "name": "Usuario",
-            "description": "Usuario"
+            "name": "Search",
+            "description": "Search"
         },
         {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }

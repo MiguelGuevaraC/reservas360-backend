@@ -18,11 +18,10 @@ return new class extends Migration
             $table->string('typeofDocument')->nullable(); // Tipo de documento, puede ser nulo
             $table->string('documentNumber')->unique(); // Número de documento, debe ser único
             $table->string('names')->nullable(); // Nombres
-            $table->string('fatherSurname')->nullable(); // Apellido del padre
-            $table->string('motherSurname')->nullable(); // Apellido de la madre
+            $table->string('paternalsurname')->nullable(); // Apellido del padre
+            $table->string('mothersurname')->nullable(); // Apellido de la madre
             $table->string('businessName')->nullable(); // Razón social o nombre del negocio, puede ser nulo
-            $table->string('representativePersonDni')->nullable(); // DNI de la persona representante, puede ser nulo
-            $table->string('representativePersonName')->nullable(); // Nombre de la persona representante, puede ser nulo
+           
             $table->string('address')->nullable(); // Dirección, puede ser nula
             $table->string('phone')->nullable(); // Teléfono, puede ser nulo
             $table->string('email')->unique(); // Correo electrónico, debe ser único
