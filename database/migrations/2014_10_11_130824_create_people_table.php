@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('typeofDocument')->nullable(); // Tipo de documento, puede ser nulo
             $table->string('documentNumber')->unique(); // Número de documento, debe ser único
             $table->string('names')->nullable(); // Nombres
-            $table->string('paternalsurname')->nullable(); // Apellido del padre
+            $table->string('fathersurname')->nullable(); // Apellido del padre
             $table->string('mothersurname')->nullable(); // Apellido de la madre
             $table->string('businessName')->nullable(); // Razón social o nombre del negocio, puede ser nulo
            

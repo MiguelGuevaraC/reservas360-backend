@@ -118,11 +118,10 @@ class Person extends Model
         'typeofDocument',
         'documentNumber',
         'names',
-        'fatherSurname',
-        'motherSurname',
+        'fathersurname',
+        'mothersurname',
         'businessName',
-        'representativePersonDni',
-        'representativePersonName',
+   
         'address',
         'phone',
 

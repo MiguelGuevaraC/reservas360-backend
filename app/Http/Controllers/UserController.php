@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthenticateRequest\LoginRequest;
+use App\Http\Requests\UserRequest\StoreUserRequest;
+use App\Http\Resources\UserResource;
+use App\Models\Person;
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Database\QueryException;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +16,13 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
+    protected $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
 
     /**
      * @OA\Get(
@@ -41,33 +51,9 @@ class UserController extends Controller
      *     )
      * )
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
-        try {
-            if (Auth::check()) {
-                // $accessToken = auth()->user()->currentAccessToken();
-
-                // if ($accessToken) {
-                //     $accessToken->delete();
-                // }
-                $accessToken = auth()->user()->currentAccessToken();
-
-                if ($accessToken) {
-                    // Establecer una nueva fecha de expiración (por ejemplo, 30 días a partir de ahora)
-                    $accessToken->expires_at = Carbon::now()->addDays(30);
-                    $accessToken->save();
-                }
-            } else {
-                return response()->json([
-                    "msg" => "Unable to logout. User is not authenticated.",
-                ], JsonResponse::HTTP_UNAUTHORIZED);
-            }
-        } catch (QueryException $e) {
-            // Captura la excepción de la base de datos (por ejemplo, si hay un problema al eliminar el token)
-            return response()->json([
-                "msg" => "An error occurred while logging out.",
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        return $this->authService->logout();
     }
     /**
      * @OA\Post(
@@ -97,7 +83,11 @@ class UserController extends Controller
      *             description="User",
      *             ref="#/components/schemas/User"
      *          ),
-
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message Response"
+     *             )
      *         )
      *     ),
      *     @OA\Response(
@@ -117,47 +107,33 @@ class UserController extends Controller
      * )
      */
 
-    public function login(Request $request)
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            "email" => "required|email|regex:/^[\w\-\.]+@([\w\-]+\.)+[a-zA-Z]{2,7}$/", // Validación de correo electrónico con expresión regular
-            "password" => "required|regex:/^[a-zA-Z0-9!@#$%^&*()_+=-]*$/", // Validación de contraseña con caracteres seguros
-        ], [
-            "email.required" => "El correo electrónico es obligatorio.",
-            "email.email" => "El correo electrónico debe ser válido.",
-            "email.regex" => "El correo electrónico no es válido.",
-            "password.required" => "La contraseña es obligatoria.",
-            "password.regex" => "La contraseña contiene caracteres no permitidos.",
-        ]);
+      
+        try {
+            
 
-        $user = User::where("email", $request->email)->first();
+            $data = $request->only(['email', 'password']);
+            // Llama al servicio de autenticación
+            $authData = $this->authService->login($request->email, $request->password);
 
-        if (!$user) {
+            // Verifica si el usuario es null
+            if (!$authData['user']) {
+                return response()->json([
+                    'error' => $authData['message'],
+                ], 422);
+            }
 
+            // Retorna la respuesta con el token y el recurso del usuario
             return response()->json([
-                "error" => "Usuario No Encontrado",
-                // "error" => "SISTEMA EN MANTENIMIENTO",
-            ], 422);
-        }
-
-        if (Hash::check($request->password, $user->password)) {
-            // Autenticar al usuario
-
-            Auth::login($user);
-
-            $token = $user->createToken('auth_token', ['expires' => now()->addHour()])->plainTextToken;
-
-            $user->makeHidden('password');
-
-            // -------------------------------------------------
-            return response()->json([
-                'token' => $token,
-                'user' => User::find($user->id),
+                'token' => $authData['token'],
+                'user' => new UserResource($authData['user']),
+                'message' => $authData['message'],
             ]);
-        } else {
-
+        } catch (\Exception $e) {
+            // Captura cualquier excepción y retorna el mensaje de error
             return response()->json([
-                "error" => "Password Not Correct",
+                'error' => $e->getMessage(),
             ], 422);
         }
     }
@@ -174,12 +150,21 @@ class UserController extends Controller
      *         description="User authenticated successfully",
      *         @OA\JsonContent(
      *             @OA\Property(
+     *                 property="token",
+     *                 type="string",
+     *                 description="Bearer token"
+     *             ),
+     *             @OA\Property(
      *             property="user",
      *             type="object",
      *             description="User",
      *             ref="#/components/schemas/User"
      *              ),
-
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message Response"
+     *             )
      *         )
      *     ),
      *     @OA\Response(
@@ -199,21 +184,43 @@ class UserController extends Controller
      * )
      */
 
-    public function authenticate()
+    public function authenticate(Request $request)
     {
-        try {
+        // Llama al servicio de autenticación
+        $result = $this->authService->authenticate();
 
-            $userAuth = auth()->user();
-
-            return response()->json([
-                'user' => User::with('person')->find($userAuth->id),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                "message" => "Error interno del servidor: " . $e,
-            ], 500);
+        // Si la autenticación falla, devuelve el mensaje de error
+        if (!$result['status']) {
+            return response()->json(['error' => $result['message']], 422);
         }
+        $token = $request->bearerToken();
+
+        // Si la autenticación es exitosa, devuelve el token, el usuario y la persona
+        return response()->json([
+            'token' => $token,
+            'user' => new UserResource($result['user']),
+            'message' => 'Autenticado',
+        ]);
     }
+
+    // public function authenticate(Request $request)
+    // {
+    //     try {
+
+    //         $userAuth = auth()->user();
+
+    //         $token = $userAuth->currentAccessToken()->plainTextToken;
+    //         $token = $request->bearerToken();
+    //         return response()->json([
+    //             'user' => User::with('person')->find($userAuth->id), // Datos del usuario
+    //             'token' => $token, // Token actual
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             "message" => "Error interno del servidor: " . $e,
+    //         ], 500);
+    //     }
+    // }
 
     /**
      * @OA\Post(
@@ -255,7 +262,7 @@ class UserController extends Controller
      * )
      */
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
 
         $validator = validator()->make($request->all(), [
@@ -267,12 +274,22 @@ class UserController extends Controller
                 Rule::unique('users')->whereNull('deleted_at'),
             ],
             'password' => 'required',
-            'person_id' => [
+
+            'names' => 'nullable|string|max:255|regex:/^[\pL\s]+$/u',
+            'fathersurname' => 'nullable|string|max:255|regex:/^[\pL\s]+$/u',
+            'mothersurname' => 'nullable|string|max:255|regex:/^[\pL\s]+$/u',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:15|regex:/^\+?[0-9\s\-]+$/',
+
+            'documentNumber' => [
                 'required',
-                'numeric',
-                'exists:people,id',
+                'exists:people,documentNumber,deleted_at,NULL',
                 function ($attribute, $value, $fail) {
-                    if (User::where('person_id', $value)->exists()) {
+                    $person = Person::where('documentNumber', $value)
+                        ->whereNull('deleted_at') // Ignora los eliminados
+                        ->first();
+
+                    if ($person && User::where('person_id', $person->id)->whereNull('deleted_at')->exists()) {
                         $fail('La persona ya tiene un usuario asociado.');
                     }
                 },

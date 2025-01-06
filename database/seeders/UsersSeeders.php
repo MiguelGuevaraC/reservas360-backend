@@ -24,8 +24,7 @@ class UsersSeeders extends Seeder
             'fatherSurname' => 'Guevara',
             'motherSurname' => 'Cajusol',
             'businessName' => null, // Nombre de la empresa
-            'representativePersonDni' => null, // DNI del representante
-            'representativePersonName' => null, // Nombre del representante
+
             'address' => 'Av. Principal 123', // Dirección
             'phone' => '987654321', // Teléfono
             'email' => 'guevaracajusolmiguel@gmail.com', // Correo electrónico

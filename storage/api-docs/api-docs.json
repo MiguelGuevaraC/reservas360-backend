@@ -309,6 +309,10 @@
                                         },
                                         "user": {
                                             "$ref": "#/components/schemas/User"
+                                        },
+                                        "message": {
+                                            "description": "Message Response",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -371,8 +375,16 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "token": {
+                                            "description": "Bearer token",
+                                            "type": "string"
+                                        },
                                         "user": {
                                             "$ref": "#/components/schemas/User"
+                                        },
+                                        "message": {
+                                            "description": "Message Response",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -438,7 +450,7 @@
                                     "email": {
                                         "description": "email",
                                         "type": "string",
-                                        "example": "guevaracajusolmiguel"
+                                        "example": "guevaracajusolmiguel@gmail.com"
                                     },
                                     "password": {
                                         "description": "Password",
