@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiExternaController;
+use App\Http\Controllers\BranchInfoController;
+use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +32,9 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get('searchByRuc/{ruc}', [ApiExternaController::class, 'searchByRuc']);
 
 //CLIENTS
+Route::get('person', [PersonaController::class, 'index']);
+//COMPANY & BRANCH
+
+Route::get('branch-office', [BranchInfoController::class, 'getBranchInfo']);
 
 });

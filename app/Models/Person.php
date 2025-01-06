@@ -28,6 +28,7 @@ class Person extends Model
         'ocupation',
 
         'state',
+        'server_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -40,6 +41,7 @@ class Person extends Model
     ];
     const filters = [
         'names' => 'like',
+        'typeofDocument' => 'like',
         'fatherSurname' => 'like',
         'motherSurname' => 'like',
         'documentNumber' => 'like',
@@ -51,11 +53,10 @@ class Person extends Model
      */
     const sorts = [
         'id' => 'desc',
-        'names' => 'asc',
-        'fatherSurname' => 'asc',
-        'motherSurname' => 'asc',
-        'documentNumber' => 'asc',
+        'names' => 'desc',
+        'fatherSurname' => 'desc',
+        'motherSurname' => 'desc',
+        'businessName' => 'desc',
         'email' => 'asc',
-        'state' => 'asc',
     ];
 }
