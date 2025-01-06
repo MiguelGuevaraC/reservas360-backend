@@ -7,7 +7,7 @@ use App\Http\Requests\UserRequest\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Person;
 use App\Models\User;
-use App\Services\AuthService;
+use App\Services\User\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -109,9 +109,8 @@ class UserController extends Controller
 
     public function login(LoginRequest $request): JsonResponse
     {
-      
+
         try {
-            
 
             $data = $request->only(['email', 'password']);
             // Llama al servicio de autenticación
