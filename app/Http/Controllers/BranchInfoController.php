@@ -85,7 +85,7 @@ class BranchInfoController extends Controller
  
      public function show($id)
      {
-         $company = $this->companyService->getCompanyById($id);
+         $company = $this->branchInfoService->getBranchOfficeById($id);
  
          if (!$company) {
              return response()->json([
@@ -110,7 +110,7 @@ class BranchInfoController extends Controller
  
      public function store(StoreBranchOfficeRequest $request)
      {
-         $company = $this->companyService->createCompany($request->validated());
+         $company = $this->branchInfoService->createBranchOffice($request->validated());
          return new BranchofficeResource($company);
      }
  
@@ -132,14 +132,14 @@ class BranchInfoController extends Controller
      {
          $validatedData = $request->validated();
  
-         $company = $this->companyService->getCompanyById($id);
+         $company = $this->branchInfoService->getBranchOfficeById($id);
          if (!$company) {
              return response()->json([
                  'error' => 'sucursal no encontrada',
              ], 404);
          }
  
-         $updatedCompany = $this->companyService->updateCompany($company, $validatedData);
+         $updatedCompany = $this->branchInfoService->updateBranchOffice($company, $validatedData);
          return new BranchofficeResource($updatedCompany);
      }
  
@@ -157,7 +157,7 @@ class BranchInfoController extends Controller
  
      public function destroy($id)
      {
-         $deleted = $this->companyService->destroyById($id);
+         $deleted = $this->branchInfoService->destroyById($id);
  
          if (!$deleted) {
              return response()->json([
