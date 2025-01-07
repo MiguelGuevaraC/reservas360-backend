@@ -20,6 +20,17 @@ class CompanyController extends Controller
         $this->companyService = $companyService;
     }
 
+    /**
+     * @OA\Get(
+     *     path="/reservas360-backend/public/api/getdata-company",
+     *     summary="Actualizar la data de la api Externa",
+     *     tags={"Company"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(response=200, description="Empresas Actualizadas", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true",property="message", type="string", example="Data Actualizada de Empresas"))),
+     *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false",property="message", type="string", example="Error al obtener datos de la API externa.")))
+     * )
+     */
+
     public function getCompanyData()
     {
         // Usamos el servicio para obtener la información de las empresas
@@ -40,7 +51,7 @@ class CompanyController extends Controller
 
      *     @OA\Parameter(name="from", in="query", description="Fecha de inicio", required=false, @OA\Schema(type="string", format="date")),
      *     @OA\Parameter(name="to", in="query", description="Fecha de fin", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Response(response=200,description="Compañía creada exitosamente",@OA\JsonContent(ref="#/components/schemas/Company")),
+     *     @OA\Response(response=200,description="Lista de Empresas",@OA\JsonContent(ref="#/components/schemas/Company")),
      *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="error", type="string")))
      * )
      */
@@ -142,7 +153,6 @@ class CompanyController extends Controller
 
     public function destroy($id)
     {
-        // Llamamos al servicio que realiza la eliminación
         $deleted = $this->companyService->destroyById($id);
 
         if (!$deleted) {

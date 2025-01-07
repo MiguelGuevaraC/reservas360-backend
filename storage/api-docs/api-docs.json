@@ -209,6 +209,54 @@
                 ]
             }
         },
+        "/reservas360-backend/public/api/getdata-company": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Actualizar la data de la api Externa",
+                "operationId": "68795a59a82fbe45e7022d192dad5788",
+                "responses": {
+                    "200": {
+                        "description": "Empresas Actualizadas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data Actualizada de Empresas"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos de la API externa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/reservas360-backend/public/api/company": {
             "get": {
                 "tags": [
@@ -268,7 +316,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Compañía creada exitosamente",
+                        "description": "Lista de Empresas",
                         "content": {
                             "application/json": {
                                 "schema": {
