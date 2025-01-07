@@ -214,7 +214,7 @@
                 "tags": [
                     "Api360"
                 ],
-                "summary": "Actualizar la data de la api Externa",
+                "summary": "Actualizar Sucursales la data de la api Externa",
                 "operationId": "84897b9844395622639edf6d14127182",
                 "responses": {
                     "200": {
@@ -621,41 +621,33 @@
             }
         },
         "/reservas360-backend/public/api/getdata-company": {
-            "post": {
+            "get": {
                 "tags": [
                     "Api360"
                 ],
-                "summary": "Actualizar la data de la api Externa",
-                "operationId": "6708c3bd13270c6791db2595f9ef1c93",
+                "summary": "Actualizar información de empresas desde API externa",
+                "operationId": "68795a59a82fbe45e7022d192dad5788",
                 "responses": {
                     "200": {
-                        "description": "Empresas Actualizadas",
+                        "description": "Datos actualizados",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Data Actualizada de Empresas"
-                                        }
-                                    },
-                                    "type": "object"
+                                "schema": {},
+                                "example": {
+                                    "status": "true",
+                                    "message": "Datos actualizados"
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Validación fallida",
+                        "description": "Error al obtener datos",
                         "content": {
                             "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Error al obtener datos de la API externa."
-                                        }
-                                    },
-                                    "type": "object"
+                                "schema": {},
+                                "example": {
+                                    "status": "false",
+                                    "message": "Error al obtener datos"
                                 }
                             }
                         }

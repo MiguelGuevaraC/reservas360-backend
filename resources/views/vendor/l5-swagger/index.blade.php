@@ -120,45 +120,83 @@
 <script src="{{ l5_swagger_asset($documentation, 'swagger-ui-standalone-preset.js') }}"></script>
 <script>
     window.onload = function() {
-        // Build a system
+        // Inicialización de Swagger UI
         const ui = SwaggerUIBundle({
             dom_id: '#swagger-ui',
             url: "{!! $urlToDocs !!}",
-            operationsSorter: {!! isset($operationsSorter) ? '"' . $operationsSorter . '"' : 'null' !!},
+            deepLinking: true, // Permite enlaces directos a operaciones
+            filter: {!! config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' !!}, // Habilita el filtro
+            tagsSorter: 'alpha', // Ordena los tags alfabéticamente
+            operationsSorter: 'alpha', // Ordena las operaciones por ruta
             configUrl: {!! isset($configUrl) ? '"' . $configUrl . '"' : 'null' !!},
             validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
             oauth2RedirectUrl: "{{ route('l5-swagger.'.$documentation.'.oauth2_callback', [], $useAbsolutePath) }}",
-
             requestInterceptor: function(request) {
                 request.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
                 return request;
             },
-
             presets: [
                 SwaggerUIBundle.presets.apis,
                 SwaggerUIStandalonePreset
             ],
-
             plugins: [
                 SwaggerUIBundle.plugins.DownloadUrl
             ],
-
             layout: "StandaloneLayout",
-            docExpansion : "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}",
-            deepLinking: true,
-            filter: {!! config('l5-swagger.defaults.ui.display.filter') ? 'true' : 'false' !!},
-            persistAuthorization: "{!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!}",
+            docExpansion: "{!! config('l5-swagger.defaults.ui.display.doc_expansion', 'none') !!}", // Controla la expansión de documentos
+            persistAuthorization: {!! config('l5-swagger.defaults.ui.authorization.persist_authorization') ? 'true' : 'false' !!}, // Persiste la autorización entre sesiones
+        });
 
-        })
+        window.ui = ui;
 
-        window.ui = ui
+        // Añadir el campo de filtro personalizado
+        const customFilter = document.createElement("input");
+        customFilter.setAttribute("id", "api-filter");
+        customFilter.setAttribute("type", "text");
+        customFilter.setAttribute("placeholder", "Filtrar por API o Tag...");
+        customFilter.style.width = "200px";
+        customFilter.style.margin = "20px";
 
+        document.querySelector("#swagger-ui").prepend(customFilter);
+
+        // Evento para filtrar APIs por texto
+        customFilter.addEventListener('input', function(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            const apiDocs = document.querySelectorAll(".opblock-tag-section");
+
+            apiDocs.forEach((section) => {
+                const tagTitle = section.querySelector('.opblock-tag').textContent.toLowerCase();
+                const operations = section.querySelectorAll('.opblock');
+
+                let sectionMatches = false;
+
+                operations.forEach((opBlock) => {
+                    const summaryPath = opBlock.querySelector('.opblock-summary-path').textContent.toLowerCase();
+                    const operationSummary = opBlock.querySelector('.opblock-summary-method').textContent.toLowerCase();
+
+                    if (summaryPath.includes(searchTerm) || operationSummary.includes(searchTerm)) {
+                        opBlock.style.display = "block";
+                        sectionMatches = true;
+                    } else {
+                        opBlock.style.display = "none";
+                    }
+                });
+
+                // Mostrar u ocultar la sección completa según coincidencias
+                section.style.display = sectionMatches || tagTitle.includes(searchTerm) ? "block" : "none";
+            });
+        });
+
+        // Inicialización de OAuth2 si es necesario
         @if(in_array('oauth2', array_column(config('l5-swagger.defaults.securityDefinitions.securitySchemes'), 'type')))
         ui.initOAuth({
-            usePkceWithAuthorizationCodeGrant: "{!! (bool)config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') !!}"
-        })
+            usePkceWithAuthorizationCodeGrant: {!! config('l5-swagger.defaults.ui.authorization.oauth2.use_pkce_with_authorization_code_grant') ? 'true' : 'false' !!}
+        });
         @endif
     }
 </script>
+
+
+
 </body>
 </html>

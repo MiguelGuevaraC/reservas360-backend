@@ -22,10 +22,10 @@ class BranchInfoController extends Controller
         $this->companyService = $companyService;
     }
 
-     /**
+    /**
      * @OA\POST(
      *     path="/reservas360-backend/public/api/getdata-branchoffice",
-     *     summary="Actualizar la data de la api Externa",
+     *     summary="Actualizar Sucursales la data de la api Externa",
      *     tags={"Api360"},
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="Data Actualizada de Sucursales", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true",property="message", type="string", example="Data Actualizada de Sucursales"))),
