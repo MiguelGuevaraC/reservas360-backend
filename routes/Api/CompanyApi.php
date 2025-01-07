@@ -10,5 +10,5 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::put('company/{id}', [CompanyController::class, 'put']);
     Route::delete('company/{id}', [CompanyController::class, 'destroy']);
 
-    Route::get('getdata-company', [CompanyController::class, 'getCompanyData']);
+    Route::post('getdata-company', [CompanyController::class, 'getCompanyData']);
 });

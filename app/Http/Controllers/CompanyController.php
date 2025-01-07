@@ -21,10 +21,10 @@ class CompanyController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\POST(
      *     path="/reservas360-backend/public/api/getdata-company",
      *     summary="Actualizar la data de la api Externa",
-     *     tags={"Company"},
+     *     tags={"Api360"},
      *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="Empresas Actualizadas", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true",property="message", type="string", example="Data Actualizada de Empresas"))),
      *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false",property="message", type="string", example="Error al obtener datos de la API externa.")))

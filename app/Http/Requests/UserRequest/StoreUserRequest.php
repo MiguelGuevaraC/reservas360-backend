@@ -84,7 +84,7 @@ class StoreUserRequest extends StoreRequest
             'phone.max' => 'El campo "Teléfono" no debe exceder los 15 caracteres.',
             'phone.regex' => 'El campo "Teléfono" debe contener solo números, espacios, guiones o un prefijo "+" válido.',
             'documentNumber.required' => 'El número de documento es obligatorio.',
-            'documentNumber.exists' => 'El número de documento proporcionado no existe o está asociado a un registro eliminado.',
+            'documentNumber.exists' => 'El número de documento proporcionado no existe.',
         ];
     }
 }

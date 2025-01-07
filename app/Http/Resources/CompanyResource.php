@@ -18,7 +18,7 @@ class CompanyResource extends JsonResource
  *     @OA\Property(property="phone", type="string", example="999999999"),
  *     @OA\Property(property="email", type="string", format="email", example="empresa@ejemplo.com"),
  *     @OA\Property(property="state", type="string", example="active"),
- *     @OA\Property(property="server_id", type="string", example="server_001"),
+ *     @OA\Property(property="server_id", type="string", example="1"),
  *     @OA\Property(property="branchoffices", type="array", @OA\Items(ref="#/components/schemas/BranchOffice"))
  * )
  */

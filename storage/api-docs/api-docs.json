@@ -209,13 +209,424 @@
                 ]
             }
         },
-        "/reservas360-backend/public/api/getdata-company": {
-            "get": {
+        "/reservas360-backend/public/api/getdata-branchoffice": {
+            "post": {
                 "tags": [
-                    "Company"
+                    "Api360"
                 ],
                 "summary": "Actualizar la data de la api Externa",
-                "operationId": "68795a59a82fbe45e7022d192dad5788",
+                "operationId": "84897b9844395622639edf6d14127182",
+                "responses": {
+                    "200": {
+                        "description": "Data Actualizada de Sucursales",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data Actualizada de Sucursales"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos de la API externa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/branchoffice": {
+            "get": {
+                "tags": [
+                    "BranchOffice"
+                ],
+                "summary": "Obtener información con filtros y ordenamiento",
+                "operationId": "48e16eab9956059131fc9b54301c5932",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de la sucursal",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Filtrar por dirección del negocio",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company$businessName",
+                        "in": "query",
+                        "description": "Filtrar por nombre de la empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Fecha de inicio",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Fecha de fin",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Empresas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchOffice"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "BranchOffice"
+                ],
+                "summary": "Crear una nueva sucursal",
+                "operationId": "0a24d2fbd3e581182026e425a3269458",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "numberDocument"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "sucursal Ejemplo"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "company_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "sucursal creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchOffice"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Datos inválidos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/branchoffice/{id}": {
+            "get": {
+                "tags": [
+                    "BranchOffice"
+                ],
+                "summary": "Obtener detalles de una sucursal por ID",
+                "operationId": "78de7407d90dc39a3e7df8af72336944",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sucursal",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucursal encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchOffice"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sucursal no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "sucursal no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "BranchOffice"
+                ],
+                "summary": "Actualizar la información de una sucursal",
+                "operationId": "606f8da4eabb9cb2d66887ed5d421164",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sucursal a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "sucursal Ejemplo"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "company_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "sucursal actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BranchOffice"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sucursal no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "sucursal no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Datos inválidos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "BranchOffice"
+                ],
+                "summary": "Eliminar sucursal por ID",
+                "operationId": "de3ba1bcf6c22e47baa1ad5f9f698174",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sucursal",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sucursal eliminada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "sucursal eliminada exitosamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "sucursal no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "sucursal no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/getdata-company": {
+            "post": {
+                "tags": [
+                    "Api360"
+                ],
+                "summary": "Actualizar la data de la api Externa",
+                "operationId": "6708c3bd13270c6791db2595f9ef1c93",
                 "responses": {
                     "200": {
                         "description": "Empresas Actualizadas",
@@ -1124,7 +1535,7 @@
                     },
                     "server_id": {
                         "type": "string",
-                        "example": "server_001"
+                        "example": "1"
                     },
                     "branchoffices": {
                         "type": "array",
@@ -1261,6 +1672,14 @@
         {
             "name": "Search",
             "description": "Search"
+        },
+        {
+            "name": "Api360",
+            "description": "Api360"
+        },
+        {
+            "name": "BranchOffice",
+            "description": "BranchOffice"
         },
         {
             "name": "Company",
