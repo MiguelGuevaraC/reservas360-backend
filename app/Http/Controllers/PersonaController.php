@@ -14,6 +14,7 @@ class PersonaController extends Controller
  * @OA\Get(
  *     path="/reservas360-backend/public/api/person",
  *     summary="Obtener información con filtros y ordenamiento",
+ *     tags={"Person"},
  *     security={{"bearerAuth": {}}},
  *     @OA\Parameter(name="names", in="query", description="Filtrar por nombre", required=false, @OA\Schema(type="string")),
  *     @OA\Parameter(name="typeofDocument", in="query", description="Filtrar por tipo de documento", required=false, @OA\Schema(type="string")),

@@ -2,7 +2,8 @@
 namespace App\Services\BranchOffice;
 
 use App\Http\Resources\CompanyResource;
-use App\Models\Person;
+use App\Models\Branchoffice;
+use App\Models\Company;
 use Illuminate\Support\Facades\Http;
 
 class BranchInfoService
@@ -22,46 +23,48 @@ class BranchInfoService
                 $data = $response->json();
 
                 // Suponiendo que la respuesta contiene el campo 'company'
-                $companyData = $data['data']['company'] ?? null;
+                $branch_info_data = $data['data']['branch'] ?? null;
 
-                if ($companyData) {
+                if ($branch_info_data) {
                     // Verificar si la empresa ya existe en la base de datos utilizando el campo 'ruc'
-                    $existingCompany = Person::where('documentNumber', $companyData['ruc'])->first();
-
-                    if (!$existingCompany) {
+                    $existingBranchOffice = Branchoffice::where('server_id', $branch_info_data['id'])->first();
+                    $existingCompany = Company::where('numberDocument', $branch_info_data['ruc'])->first();
+                    if (!$existingBranchOffice) {
                         // Si no existe, crear una nueva empresa con los datos obtenidos
-                        $company = Person::create([
-                            'typeofDocument' => 'RUC',
-                            'documentNumber' => $companyData['ruc'],
-                            'businessName' => $companyData['name'] ?? null,
-                            'address' => $companyData['address'] ?? 'No disponible',
-                            'phone' => $companyData['telephone'] ?? 'No disponible',
-                            'email' => $companyData['email'] ?? 'No disponible',
-                            'server_id' => $companyData['id'] ?? '',
-                            'ocupation' => 'Empresa',
+                        $company = Branchoffice::create([
+
+                            'name' => $branch_info_data['brand_name'],
+
+                            'address' => $branch_info_data['address'] ?? 'No disponible',
+                            'phone' => $branch_info_data['telephone'] ?? 'No disponible',
+                            'email' => $branch_info_data['email'] ?? 'No disponible',
+                            'company_id' => $existingCompany->id ??null,
+                            'server_id' => $branch_info_data['id'] ?? '',
+
                         ]);
 
                         // Usamos el recurso para devolver la respuesta
                         new CompanyResource($company);
                     } else {
                         // Si existe, actualizar la empresa con los nuevos datos
-                        $existingCompany->update([
-                            'typeofDocument' => 'RUC',
-                            'documentNumber' => $companyData['ruc'],
-                            'businessName' => $companyData['name'] ?? $existingCompany->businessName,
-                            'address' => $companyData['address'] ?? $existingCompany->address,
-                            'phone' => $companyData['telephone'] ?? $existingCompany->phone,
-                            'email' => $companyData['email'] ?? $existingCompany->email,
-                            'server_id' => $companyData['id'] ?? $existingCompany->server_id,
-                            'ocupation' => 'Empresa',
+                        $existingBranchOffice->update([
+
+                            'name' => $branch_info_data['ruc'],
+
+                            'address' => $branch_info_data['address'] ?? $existingBranchOffice->address,
+                            'phone' => $branch_info_data['telephone'] ?? $existingBranchOffice->phone,
+                            'email' => $branch_info_data['email'] ?? $existingBranchOffice->email,
+                            'company_id' => $existingCompany->id  ?? $existingBranchOffice->company_id,
+                            'server_id' => $branch_info_data['id'] ?? $existingBranchOffice->server_id,
+
                         ]);
 
                         // Devolver la empresa actualizada usando el recurso
-                        new CompanyResource($existingCompany);
+                        new CompanyResource($existingBranchOffice);
                     }
                     return ([
                         'status' => true,
-                        'message' => 'Data Actualizada de Empresas',
+                        'message' => 'Data Actualizada de Sucursales',
                     ]);
                 } else {
                     return response()->json([

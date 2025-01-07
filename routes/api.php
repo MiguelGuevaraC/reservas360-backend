@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ApiExternaController;
 use App\Http\Controllers\BranchInfoController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,21 +20,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [UserController::class, 'login']);
 Route::post('user', [UserController::class, 'store']);
 
-
 Route::group(["middleware" => ["auth:sanctum"]], function () {
 
-    //AUTHENTICATE
-    Route::get('logout', [UserController::class, 'logout']);
-    Route::get('authenticate', [UserController::class, 'authenticate']);
-
-// SEARCH
-    Route::get('searchByDni/{dni}', [ApiExternaController::class, 'searchByDni']);
-    Route::get('searchByRuc/{ruc}', [ApiExternaController::class, 'searchByRuc']);
-
-//CLIENTS
-Route::get('person', [PersonaController::class, 'index']);
-//COMPANY & BRANCH
-
-Route::get('branch-office', [BranchInfoController::class, 'getBranchInfo']);
-
+    
+    require __DIR__ . '/Api/AuthApi.php';//AUTHENTICATE
+    require __DIR__ . '/Api/SearchApi.php';// SEARCH
+    require __DIR__ . '/Api/ClientApi.php'; //CLIENTS
+    require __DIR__ . '/Api/CompanyApi.php'; //CLIENTS
+    require __DIR__ . '/Api/BranchOfficeApi.php'; //BRANCHOFFICE
+    
+  
 });

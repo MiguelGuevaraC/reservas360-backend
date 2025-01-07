@@ -209,8 +209,384 @@
                 ]
             }
         },
+        "/reservas360-backend/public/api/company": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Obtener información con filtros y ordenamiento",
+                "operationId": "fb6f43c0d5d2f6400eab5b72cd27d824",
+                "parameters": [
+                    {
+                        "name": "numberDocument",
+                        "in": "query",
+                        "description": "Filtrar por número de documento",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "businessName",
+                        "in": "query",
+                        "description": "Filtrar por nombre del negocio",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Filtrar por correo electrónico",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Fecha de inicio",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Fecha de fin",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Compañía creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Crear una nueva compañía",
+                "operationId": "7ce130f63d40fc51f73dd7d4519ac144",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "numberDocument"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Compañía Ejemplo"
+                                    },
+                                    "numberDocument": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "businessName": {
+                                        "type": "string",
+                                        "example": "Mi Empresa S.A."
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "empresa@ejemplo.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "999999999"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Compañía creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Datos inválidos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/company/{id}": {
+            "get": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Obtener detalles de una compañía por ID",
+                "operationId": "e2fac6b7bba3e0730c967e3b2d08aa1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la compañía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Compañía encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Compañía no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Compañía no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Actualizar la información de una compañía",
+                "operationId": "348cb442e2a87ac9157af66512da3d3d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la compañía a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "numberDocument": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "businessName": {
+                                        "type": "string",
+                                        "example": "Mi Empresa Actualizada S.A."
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "actualizado@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Compañía actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Company"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Compañía no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Compañía no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Datos inválidos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Company"
+                ],
+                "summary": "Eliminar compañía por ID",
+                "operationId": "f8e1f9432a28c77d7efd99d3cf6708e2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la compañía",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Compañía eliminada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Compañía eliminada exitosamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Compañía no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Compañía no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/reservas360-backend/public/api/person": {
             "get": {
+                "tags": [
+                    "Person"
+                ],
                 "summary": "Obtener información con filtros y ordenamiento",
                 "operationId": "6c635875447ff67d4ec92ca72d42e378",
                 "parameters": [
@@ -646,6 +1022,71 @@
     },
     "components": {
         "schemas": {
+            "BranchOffice": {
+                "title": "BranchOffice",
+                "description": "Branch Office model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Sucursal 01"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "AV. 123"
+                    }
+                },
+                "type": "object"
+            },
+            "Company": {
+                "title": "Company",
+                "description": "Company model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "numberDocument": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "businessName": {
+                        "type": "string",
+                        "example": "Mi Empresa S.A."
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Av. Siempre Viva 123"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "999999999"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "empresa@ejemplo.com"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "active"
+                    },
+                    "server_id": {
+                        "type": "string",
+                        "example": "server_001"
+                    },
+                    "branchoffices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BranchOffice"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Person": {
                 "title": "person",
                 "description": "Modelo de Persona",
@@ -772,6 +1213,14 @@
         {
             "name": "Search",
             "description": "Search"
+        },
+        {
+            "name": "Company",
+            "description": "Company"
+        },
+        {
+            "name": "Person",
+            "description": "Person"
         },
         {
             "name": "Authentication",

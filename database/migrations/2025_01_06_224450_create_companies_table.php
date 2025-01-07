@@ -11,23 +11,22 @@ return new class extends Migration
      *
      * @return void
      */
+
+ 
+  
     public function up()
     {
-        Schema::create('people', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id(); // Genera una columna 'id' autoincremental
-            $table->string('typeofDocument')->nullable(); // Tipo de documento, puede ser nulo
-            $table->string('documentNumber')->unique(); // Número de documento, debe ser único
-            $table->string('names')->nullable(); // Nombres
-            $table->string('fathersurname')->nullable(); // Apellido del padre
-            $table->string('mothersurname')->nullable(); // Apellido de la madre
-            $table->string('businessName')->nullable(); // Razón social o nombre del negocio, puede ser nulo
+
+            $table->string('numberDocument')->unique(); // Número de documento, debe ser único
+            $table->string('businessName')->nullable(); // Nombres
            
             $table->string('address')->nullable(); // Dirección, puede ser nula
             $table->string('phone')->nullable(); // Teléfono, puede ser nulo
             $table->string('email')->unique(); // Correo electrónico, debe ser único
-            $table->string('origin')->nullable(); // Origen, puede ser nulo
-            $table->string('ocupation')->nullable(); // Ocupación, puede ser nulo
-            $table->enum('state', ['1', '0'])->default('0'); // Estado, por defecto 'active'
+            
+            $table->enum('state', ['1', '0'])->default('1'); // Estado
             $table->string('server_id')->nullable(); // id del servidor
             $table->timestamps(); // 'created_at' y 'updated_at'
             $table->softDeletes(); // Agrega el campo 'deleted_at' para el soft delete
@@ -41,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('people');
+        Schema::dropIfExists('companies');
     }
 };
