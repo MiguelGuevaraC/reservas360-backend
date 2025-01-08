@@ -7,7 +7,7 @@ use App\Http\Requests\UserRequest\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Person;
 use App\Models\User;
-use App\Services\User\AuthService;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

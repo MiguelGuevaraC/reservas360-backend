@@ -7,8 +7,8 @@ use App\Http\Requests\BranchOfficeRequest\StoreBranchOfficeRequest;
 use App\Http\Requests\BranchOfficeRequest\UpdateBranchOfficeRequest;
 use App\Http\Resources\BranchofficeResource;
 use App\Models\Branchoffice;
-use App\Services\BranchOffice\BranchInfoService;
-use App\Services\Company\CompanyService;
+use App\Services\BranchInfoService;
+use App\Services\CompanyService;
 
 class BranchInfoController extends Controller
 {
@@ -23,7 +23,7 @@ class BranchInfoController extends Controller
     }
 
     /**
-     * @OA\POST(
+     * @OA\GET(
      *     path="/reservas360-backend/public/api/getdata-branchoffice",
      *     summary="Actualizar Sucursales la data de la api Externa",
      *     tags={"Api360"},

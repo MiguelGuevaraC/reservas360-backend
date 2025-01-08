@@ -7,7 +7,7 @@ use App\Http\Requests\CompanyRequest\StoreCompanyRequest;
 use App\Http\Requests\CompanyRequest\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
-use App\Services\Company\CompanyService;
+use App\Services\CompanyService;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
