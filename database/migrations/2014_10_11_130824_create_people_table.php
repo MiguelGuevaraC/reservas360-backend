@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('email')->unique(); // Correo electrónico, debe ser único
             $table->string('origin')->nullable(); // Origen, puede ser nulo
             $table->string('ocupation')->nullable(); // Ocupación, puede ser nulo
-            $table->enum('state', ['1', '0'])->default('0'); // Estado, por defecto 'active'
+            $table->enum('state', ['1', '0'])->default('1'); // Estado, por defecto 'active'
             $table->string('server_id')->nullable(); // id del servidor
             $table->timestamps(); // 'created_at' y 'updated_at'
             $table->softDeletes(); // Agrega el campo 'deleted_at' para el soft delete

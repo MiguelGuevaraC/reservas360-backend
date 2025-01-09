@@ -5,7 +5,7 @@ namespace App\Utils;
 class Constants
 {
 
-    public const DEFAULT_PER_PAGE = 5;
+    public const DEFAULT_PER_PAGE = 15;
 
     const ES_MONTHS = [
         'January' => "Enero",

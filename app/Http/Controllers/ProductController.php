@@ -17,28 +17,26 @@ class ProductController extends Controller
     protected $categoryService;
 
     // Inyectamos el servicio en el controlador
-    public function __construct(ProductService $productService,CategoryService $categoryService)
+    public function __construct(ProductService $productService, CategoryService $categoryService)
     {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
 
     }
 
-    /**
-     * @OA\GET(
-     *     path="/reservas360-backend/public/api/getdata-categories",
-     *     summary="Actualizar Productos la data de la api Externa",
-     *     tags={"Api360"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(response=200, description="Data Actualizada de Producto", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true",property="message", type="string", example="Data Actualizada de Producto"))),
-     *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false",property="message", type="string", example="Error al obtener datos de la API externa.")))
-     * )
-     */
-    public function getProducts()
+    public function getProducts(Request $request)
     {
         // Usamos el servicio para obtener la información de la categoria
-        $data =$this->categoryService->fetchCategory();
-        $data = $this->productService->fetchProduct();
+        // $data =$this->categoryService->fetchCategory($request);
+        // $data = $this->productService->fetchProduct($request);
+        $uuid = $request->input('uuid', '7554dbfe-74ea-4dfb-b997-47633f9b5761');
+        $data = $this->productService->fetchDataAndSync(
+            'products-and-services',
+            'products',
+            Product::class,
+            Product::getfields,
+            $uuid
+        );
 
         return response()->json($data); // Devolvemos la respuesta
     }

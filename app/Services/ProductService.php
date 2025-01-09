@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class ProductService
@@ -34,7 +35,7 @@ class ProductService
     }
 
     // El método recibe el UUID de la sucursal
-    public function fetchProduct()
+    public function fetchProduct(Request $request)
     {
         try {
             // Realizar la solicitud GET con los headers necesarios
@@ -46,10 +47,10 @@ class ProductService
             if ($response->successful()) {
                 // Obtener los datos de la respuesta
                 $data = $response->json();
-            
+
                 // Suponiendo que la respuesta contiene un array en 'data.products'
                 $branch_info_data = $data['data']['products'] ?? [];
-            
+
                 if (!empty($branch_info_data)) {
                     foreach ($branch_info_data as $Product) {
                         // Verificar si la producto ya existe en la base de datos utilizando el campo 'id' del servidor
@@ -68,7 +69,7 @@ class ProductService
                                 'status' => $Product['status'] ?? '',
                                 'server_id' => $Product['id'] ?? '',
                             ]);
-            
+
                             // Usamos el recurso para devolver la respuesta (opcional, solo si necesitas procesar cada elemento)
                             new ProductResource($newProduct);
                         } else {
@@ -79,17 +80,17 @@ class ProductService
                                 'photo' => $Product['photo'] ?? $existingProduct->photo,
                                 'stock' => $Product['stock'] ?? $existingProduct->stock,
                                 'price' => $Product['price'] ?? $existingProduct->price,
-                                'category_id' =>  $existingCategory->id  ?? $existingProduct->category_id,
+                                'category_id' => $existingCategory->id ?? $existingProduct->category_id,
 
                                 'status' => $Product['status'] ?? $existingProduct->status,
                                 'server_id' => $Product['id'] ?? $existingProduct->server_id,
                             ]);
-            
+
                             // Usamos el recurso para devolver la respuesta (opcional, solo si necesitas procesar cada elemento)
                             new ProductResource($existingProduct);
                         }
                     }
-            
+
                     return ([
                         'status' => true,
                         'message' => 'Datos de productos actualizados correctamente.',
@@ -106,9 +107,7 @@ class ProductService
                     'message' => 'La solicitud no fue exitosa.',
                 ]);
             }
-            
 
-     
         } catch (\Exception $e) {
             // Manejo de cualquier excepción
             return ([
@@ -117,4 +116,62 @@ class ProductService
             ]);
         }
     }
+
+    public function fetchDataAndSync(
+        string $endpoint, // Nombre de la ruta a solicitar
+        string $dataKey, // Nombre de la key para obtener la data
+        string $modelClass, // Nombre del modelo
+        array $fields, // Campos del modelo a sincronizar
+        string $authorizationUiid // Token de autorización
+    ) {
+        try {
+            $endpoint = "https://sistema.360sys.com.pe/api/app-mobile/" . $endpoint;
+    
+            $response = Http::withHeaders([
+                'Authorization' => $authorizationUiid,
+            ])->get($endpoint);
+    
+            // Verificar si la respuesta fue exitosa
+            if ($response->successful()) {
+                $data = $response->json();
+                $items = $data['data'][$dataKey] ?? []; // Obtener los datos dinámicamente
+    
+                if (!empty($items)) {
+                    foreach ($items as $item) {
+                        // Crear o actualizar el modelo según el campo 'server_id'
+                        $modelClass::updateOrCreate(
+                            ['server_id' => $item['id']], // Buscar por el campo 'server_id'
+                            array_merge(
+                                array_intersect_key($item, array_flip($fields)), // Solo sincronizar los campos requeridos
+                                ['server_id' => $item['id']] // Asignar el 'server_id'
+                            )
+                        );
+                    }
+    
+                    return [
+                        'status' => true,
+                        'message' => "Datos sincronizados correctamente para el modelo {$modelClass}.",
+                    ];
+                } else {
+                    return [
+                        'status' => false,
+                        'message' => "No se encontraron datos en la clave '{$dataKey}'.",
+                    ];
+                }
+            } else {
+                return [
+                    'status' => false,
+                    'message' => 'La solicitud a la API no fue exitosa.',
+                ];
+            }
+        } catch (\Exception $e) {
+            // Manejo de excepciones
+            return [
+                'status' => false,
+                'message' => 'Error interno: ' . $e->getMessage(),
+            ];
+        }
+    }
+    
+
 }

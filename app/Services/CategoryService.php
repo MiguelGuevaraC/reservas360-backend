@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class CategoryService
@@ -33,7 +34,7 @@ class CategoryService
     }
 
     // El método recibe el UUID de la sucursal
-    public function fetchCategory()
+    public function fetchCategory(Request $request)
     {
         try {
             // Realizar la solicitud GET con los headers necesarios
