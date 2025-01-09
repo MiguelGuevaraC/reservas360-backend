@@ -7,36 +7,30 @@ use App\Http\Requests\ProductRequest\StoreProductRequest;
 use App\Http\Requests\ProductRequest\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Services\CategoryService;
+use App\Services\Api360Service;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected $productService;
-    protected $categoryService;
+    protected $api360Service;
 
     // Inyectamos el servicio en el controlador
-    public function __construct(ProductService $productService, CategoryService $categoryService)
+    public function __construct(ProductService $productService, Api360Service $api360Service)
     {
         $this->productService = $productService;
-        $this->categoryService = $categoryService;
+        $this->api360Service = $api360Service;
 
     }
 
     public function getProducts(Request $request)
     {
-        // Usamos el servicio para obtener la información de la categoria
-        // $data =$this->categoryService->fetchCategory($request);
-        // $data = $this->productService->fetchProduct($request);
-        $uuid = $request->input('uuid', '7554dbfe-74ea-4dfb-b997-47633f9b5761');
-        $data = $this->productService->fetchDataAndSync(
-            'products-and-services',
-            'products',
-            Product::class,
-            Product::getfields,
-            $uuid
-        );
+
+        $uuid = $request->input('uuid', '');
+
+        $data[] = $this->api360Service->fetch_categories($uuid);
+        $data[] = $this->api360Service->fetch_products($uuid);
 
         return response()->json($data); // Devolvemos la respuesta
     }

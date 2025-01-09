@@ -10,5 +10,5 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::put('person/{id}', [PersonaController::class, 'put']);
     Route::delete('person/{id}', [PersonaController::class, 'destroy']);
 
-    Route::get('getdata-company', [PersonaController::class, 'getCompanyData']);
+    Route::get('getdata-person', [PersonaController::class, 'getPersonData']);
 });

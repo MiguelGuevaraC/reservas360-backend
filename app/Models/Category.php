@@ -11,6 +11,7 @@ class Category extends Model
     protected $fillable = [
         'id',
         'name',
+        'status',
         'server_id',
 
         'created_at',
@@ -28,6 +29,12 @@ class Category extends Model
         'status' => 'like',
     ];
 
+
+    const getfields = [
+        'name',
+        'status',
+        'server_id',
+    ];
     /**
      * Campos de ordenación disponibles.
      */

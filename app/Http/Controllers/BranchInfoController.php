@@ -7,19 +7,22 @@ use App\Http\Requests\BranchOfficeRequest\StoreBranchOfficeRequest;
 use App\Http\Requests\BranchOfficeRequest\UpdateBranchOfficeRequest;
 use App\Http\Resources\BranchofficeResource;
 use App\Models\Branchoffice;
+use App\Services\Api360Service;
 use App\Services\BranchInfoService;
 use App\Services\CompanyService;
+use Illuminate\Http\Request;
 
 class BranchInfoController extends Controller
 {
-    protected $companyService;
+   
+    protected $api360Service;
     protected $branchInfoService;
 
     // Inyectamos el servicio en el controlador
-    public function __construct(BranchInfoService $branchInfoService,CompanyService $companyService)
+    public function __construct(BranchInfoService $branchInfoService,Api360Service $api360Service)
     {
         $this->branchInfoService = $branchInfoService;
-        $this->companyService = $companyService;
+        $this->api360Service = $api360Service;
     }
 
     /**
@@ -32,11 +35,12 @@ class BranchInfoController extends Controller
      *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false",property="message", type="string", example="Error al obtener datos de la API externa.")))
      * )
      */
-    public function getBranchInfo()
+    public function getBranchInfo(Request $request)
     {
+        $uuid = $request->input('uuid', '');
         // Usamos el servicio para obtener la información de la sucursal
-        $this->companyService->fetchCompanyData();
-        $data = $this->branchInfoService->fetchBranchInfo();
+        $this->api360Service->fetch_compannies($uuid);
+        $data = $this->api360Service->fetch_branches();
 
         return response()->json($data); // Devolvemos la respuesta
     }

@@ -19,11 +19,12 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id(); // Genera una columna 'id' autoincremental
 
-            $table->string('numberDocument')->unique(); // Número de documento, debe ser único
-            $table->string('businessName')->nullable(); // Nombres
+            $table->string('ruc')->unique(); // Número de documento, debe ser único
+            $table->string('name')->nullable(); // Nombres
            
             $table->string('address')->nullable(); // Dirección, puede ser nula
             $table->string('phone')->nullable(); // Teléfono, puede ser nulo
+            $table->string('telephone')->nullable(); // Teléfono, puede ser nulo
             $table->string('email')->unique(); // Correo electrónico, debe ser único
             
             $table->enum('state', ['1', '0'])->default('1'); // Estado

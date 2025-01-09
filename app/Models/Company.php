@@ -10,10 +10,11 @@ class Company extends Model
     use SoftDeletes;
     protected $fillable = [
         'id',
-        'numberDocument',
-        'businessName',
+        'ruc',
+        'name',
         'address',
         'phone',
+        'telephone',
         'email',
         'state',
         'server_id',
@@ -28,23 +29,33 @@ class Company extends Model
         'deleted_at',
     ];
     const filters = [
-        'businessName' => 'like',
+        'name' => 'like',
         'numberDocument' => 'like',
         'ruc' => 'like',
         'address' => 'like',
         'email' => 'like',
         'phone' => 'like',
+        'telephone' => 'like',
     ];
 
     /**
      * Campos de ordenación disponibles.
      */
     const sorts = [
-        'businessName' => 'desc',
+        'name' => 'desc',
         'ruc' => 'desc',
         'address' => 'desc',
     ];
-
+    const getfields = [
+        'ruc',
+        'name',
+        'address',
+        'phone',
+        'telephone',
+        'email',
+        'state',
+        'server_id'
+    ];
 
     public function branchoffices()
     {

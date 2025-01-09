@@ -7,16 +7,19 @@ use App\Http\Requests\CompanyRequest\StoreCompanyRequest;
 use App\Http\Requests\CompanyRequest\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Services\Api360Service;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    protected $api360Service;
     protected $companyService;
 
     // Inyectamos el servicio en el controlador
-    public function __construct(CompanyService $companyService)
+    public function __construct(Api360Service $api360Service, CompanyService $companyService)
     {
+        $this->api360Service = $api360Service;
         $this->companyService = $companyService;
     }
 
@@ -38,11 +41,10 @@ class CompanyController extends Controller
      *     )
      * )
      */
-    public function getCompanyData()
+    public function getCompanyData(Request $request)
     {
-        // Usamos el servicio para obtener la información de las empresas
-        $data = $this->companyService->fetchCompanyData();
-
+        $uuid = $request->input('uuid', '');
+        $data = $this->api360Service->fetch_compannies($uuid);
         return response()->json($data); // Devolvemos la respuesta
     }
 

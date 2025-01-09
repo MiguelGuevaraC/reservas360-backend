@@ -11,11 +11,14 @@ class Branchoffice extends Model
     use SoftDeletes;
     protected $fillable = [
         'id',
+        'brand_name',
+        'ruc',
         'name',
         'address',
-        'state',
+        'phone',
+        'telephone',
+        'email',
         'server_id',
-        
         'company_id',
         'created_at',
         'updated_at',
@@ -43,7 +46,17 @@ class Branchoffice extends Model
         'address' => 'desc',
  
     ];
-
+    const getfields = [
+        'brand_name',
+        'ruc',
+        'name',
+        'address',
+        'phone',
+        'telephone',
+        'email',
+        'server_id',
+        'company_id',
+    ];
     
     public function company()
     {

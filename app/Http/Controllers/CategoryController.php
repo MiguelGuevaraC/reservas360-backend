@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Services;
 
 
+use App\Services\Api360Service;
 use App\Services\CategoriesService;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
@@ -18,11 +19,13 @@ class CategoryController extends Controller
 {
 
     protected $categoryService;
+    protected $api360Service;
 
     // Inyectamos el servicio en el controlador
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService,Api360Service $api360Service)
     {
         $this->categoryService = $categoryService;
+        $this->api360Service = $api360Service;
 
     }
 
@@ -36,11 +39,10 @@ class CategoryController extends Controller
      *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false",property="message", type="string", example="Error al obtener datos de la API externa.")))
      * )
      */
-    public function getCategories()
+    public function getCategories(Request $request)
     {
-        // Usamos el servicio para obtener la información de la categoria
-
-        $data = $this->categoryService->fetchCategory();
+        $uuid = $request->input('uuid', '');
+        $data = $this->api360Service->fetch_categories($uuid);
 
         return response()->json($data); // Devolvemos la respuesta
     }
