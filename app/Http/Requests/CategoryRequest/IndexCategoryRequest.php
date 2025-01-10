@@ -24,14 +24,23 @@ class IndexCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'uuid' => 'nullable|string',
             'name' => 'nullable|string',
-            'address' => 'nullable|string',
-            
-            'company$businessName' => 'nullable|string',
-           
+            'brand_name' => 'nullable|string',
             'from' => 'nullable|date',
             'to' => 'nullable|date',
 
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'uuid.string' => 'El campo "UUID" debe ser una cadena de texto.',
+            'name.string' => 'El campo "nombre" debe ser una cadena de texto.',
+    
+            'from.date' => 'El campo "desde" debe ser una fecha válida.',
+            'to.date' => 'El campo "hasta" debe ser una fecha válida.',
+        ];
+    }
+
 }

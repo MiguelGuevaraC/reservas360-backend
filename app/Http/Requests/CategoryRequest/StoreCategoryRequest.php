@@ -20,8 +20,7 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'company_id' => 'exists:companies,id,deleted_at,NULL',
+ 
         ];
     }
 
@@ -31,10 +30,6 @@ class StoreCategoryRequest extends FormRequest
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
             'name.max' => 'El nombre no puede tener más de 255 caracteres.',
-            'address.required' => 'La dirección de documento es obligatorio.',
-            'address.string' => 'La dirección de documento debe ser una cadena de texto.',
-            'address.max' => 'La dirección de documento no puede tener más de 20 caracteres.',
-            'company_id.exists' => 'El id Empresa proporcionado no existe.',
         ];
     }
 }

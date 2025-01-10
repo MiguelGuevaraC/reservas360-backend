@@ -24,6 +24,7 @@ class IndexProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'uuid' => 'nullable|string',
             'name' => 'nullable|string',
             'description' => 'nullable|string',
             'stock' => 'nullable|string',

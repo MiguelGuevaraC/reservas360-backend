@@ -24,15 +24,33 @@ class IndexCompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numberDocument' => 'nullable|string',
-            'businessName' => 'nullable|string',
+            'uuid' => 'nullable|string',
+            'ruc' => 'nullable|string',
+            'name' => 'nullable|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string',
+            'telephone' => 'nullable|string',
             'email' => 'nullable|email',
-           
+
             'from' => 'nullable|date',
             'to' => 'nullable|date',
 
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'uuid.string' => 'El campo "UUID" debe ser una cadena de texto.',
+            'ruc.string' => 'El campo "RUC" debe ser una cadena de texto.',
+            'name.string' => 'El campo "nombre" debe ser una cadena de texto.',
+            'address.string' => 'El campo "dirección" debe ser una cadena de texto.',
+            'phone.string' => 'El campo "teléfono" debe ser una cadena de texto.',
+            'telephone.string' => 'El campo "teléfono fijo" debe ser una cadena de texto.',
+            'email.email' => 'El campo "correo electrónico" debe ser una dirección de correo válida.',
+            'from.date' => 'El campo "desde" debe ser una fecha válida.',
+            'to.date' => 'El campo "hasta" debe ser una fecha válida.',
+        ];
+    }
+    
+
 }

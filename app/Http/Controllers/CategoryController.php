@@ -31,7 +31,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\GET(
-     *     path="/reservas360-backend/public/api/getdata-categories",
+     *     path="/reservas360-backend/public/api/getdata-category",
      *     summary="Actualizar Categorias la data de la api Externa",
      *     tags={"Api360"},
      *     security={{"bearerAuth": {}}},
@@ -64,6 +64,7 @@ class CategoryController extends Controller
 
     public function index(IndexCategoryRequest $request)
     {
+        $respuesta_actualizar_data= $this->getCategories($request);
         return $this->getFilteredResults(
             Category::class,
             $request,
@@ -98,78 +99,78 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    /**
-     * @OA\Post(
-     *     path="/reservas360-backend/public/api/category",
-     *     summary="Crear una nueva categoria",
-     *     tags={"Category"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", required={"name", "numberDocument"}, @OA\Property(property="name", type="string", example="categoria Ejemplo"))),
-     *     @OA\Response(response=200, description="categoria creada exitosamente", @OA\JsonContent(ref="#/components/schemas/Category")),
-     *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
-     * )
-     */
+    // /**
+    //  * @OA\Post(
+    //  *     path="/reservas360-backend/public/api/category",
+    //  *     summary="Crear una nueva categoria",
+    //  *     tags={"Category"},
+    //  *     security={{"bearerAuth": {}}},
+    //  *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", required={"name", "numberDocument"}, @OA\Property(property="name", type="string", example="categoria Ejemplo"))),
+    //  *     @OA\Response(response=200, description="categoria creada exitosamente", @OA\JsonContent(ref="#/components/schemas/Category")),
+    //  *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
+    //  * )
+    //  */
 
-    public function store(StoreCategoryRequest $request)
-    {
-        $category = $this->categoryService->createCategory($request->validated());
-        return new CategoryResource($category);
-    }
+    // public function store(StoreCategoryRequest $request)
+    // {
+    //     $category = $this->categoryService->createCategory($request->validated());
+    //     return new CategoryResource($category);
+    // }
 
-    /**
-     * @OA\Put(
-     *     path="/reservas360-backend/public/api/category/{id}",
-     *     summary="Actualizar la información de una categoria",
-     *     tags={"Category"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(name="id", in="path", description="ID de la categoria a actualizar", required=true, @OA\Schema(type="integer", example=1)),
-     *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", @OA\Property(property="name", type="string", example="categoria Ejemplo"))),
-     *     @OA\Response(response=200, description="categoria actualizada exitosamente", @OA\JsonContent(ref="#/components/schemas/Category")),
-     *     @OA\Response(response=404, description="Categoria no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Categoria no encontrada"))),
-     *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
-     * )
-     */
+    // /**
+    //  * @OA\Put(
+    //  *     path="/reservas360-backend/public/api/category/{id}",
+    //  *     summary="Actualizar la información de una categoria",
+    //  *     tags={"Category"},
+    //  *     security={{"bearerAuth": {}}},
+    //  *     @OA\Parameter(name="id", in="path", description="ID de la categoria a actualizar", required=true, @OA\Schema(type="integer", example=1)),
+    //  *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", @OA\Property(property="name", type="string", example="categoria Ejemplo"))),
+    //  *     @OA\Response(response=200, description="categoria actualizada exitosamente", @OA\JsonContent(ref="#/components/schemas/Category")),
+    //  *     @OA\Response(response=404, description="Categoria no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Categoria no encontrada"))),
+    //  *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
+    //  * )
+    //  */
 
-    public function update(UpdateCategoryRequest $request, $id)
-    {
-        $validatedData = $request->validated();
+    // public function update(UpdateCategoryRequest $request, $id)
+    // {
+    //     $validatedData = $request->validated();
 
-        $category = $this->categoryService->getCategoryById($id);
-        if (!$category) {
-            return response()->json([
-                'error' => 'Categoria no encontrada',
-            ], 404);
-        }
+    //     $category = $this->categoryService->getCategoryById($id);
+    //     if (!$category) {
+    //         return response()->json([
+    //             'error' => 'Categoria no encontrada',
+    //         ], 404);
+    //     }
 
-        $updatedCompany = $this->categoryService->updateCategory($category, $validatedData);
-        return new CategoryResource($updatedCompany);
-    }
+    //     $updatedCompany = $this->categoryService->updateCategory($category, $validatedData);
+    //     return new CategoryResource($updatedCompany);
+    // }
 
-    /**
-     * @OA\Delete(
-     *     path="/reservas360-backend/public/api/category/{id}",
-     *     summary="Eliminar categoria por ID",
-     *     tags={"Category"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(name="id", in="path", description="ID de la categoria", required=true, @OA\Schema(type="integer", example=1)),
-     *     @OA\Response(response=200, description="categoria eliminada exitosamente", @OA\JsonContent(type="object", @OA\Property(property="message", type="string", example="categoria eliminada exitosamente"))),
-     *     @OA\Response(response=404, description="Categoria no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Categoria no encontrada")))
-     * )
-     */
+    // /**
+    //  * @OA\Delete(
+    //  *     path="/reservas360-backend/public/api/category/{id}",
+    //  *     summary="Eliminar categoria por ID",
+    //  *     tags={"Category"},
+    //  *     security={{"bearerAuth": {}}},
+    //  *     @OA\Parameter(name="id", in="path", description="ID de la categoria", required=true, @OA\Schema(type="integer", example=1)),
+    //  *     @OA\Response(response=200, description="categoria eliminada exitosamente", @OA\JsonContent(type="object", @OA\Property(property="message", type="string", example="categoria eliminada exitosamente"))),
+    //  *     @OA\Response(response=404, description="Categoria no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Categoria no encontrada")))
+    //  * )
+    //  */
 
-    public function destroy($id)
-    {
-        $deleted = $this->categoryService->destroyById($id);
+    // public function destroy($id)
+    // {
+    //     $deleted = $this->categoryService->destroyById($id);
 
-        if (!$deleted) {
-            return response()->json([
-                'error' => 'Categoria no encontrada o no se pudo eliminar',
-            ], 404);
-        }
+    //     if (!$deleted) {
+    //         return response()->json([
+    //             'error' => 'Categoria no encontrada o no se pudo eliminar',
+    //         ], 404);
+    //     }
 
-        return response()->json([
-            'message' => 'Categoria eliminada exitosamente',
-        ], 200);
-    }
+    //     return response()->json([
+    //         'message' => 'Categoria eliminada exitosamente',
+    //     ], 200);
+    // }
 
 }

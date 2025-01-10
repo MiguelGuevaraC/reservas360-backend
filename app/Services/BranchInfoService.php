@@ -3,17 +3,17 @@ namespace App\Services;
 
 use App\Http\Resources\BranchofficeResource;
 use App\Models\Branchoffice;
-use App\Models\Company;
+
 use Illuminate\Support\Facades\Http;
 
 class BranchInfoService
 {
 
-    public function getBranchOfficeById(int $id): ?Company
+    public function getBranchOfficeById(int $id): ?Branchoffice
     {
         return Branchoffice::find($id);
     }
-    public function createBranchOffice(array $data): Company
+    public function createBranchOffice(array $data): Branchoffice
     {
         return Branchoffice::create($data);
     }

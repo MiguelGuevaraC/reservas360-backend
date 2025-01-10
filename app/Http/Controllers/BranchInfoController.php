@@ -46,26 +46,32 @@ class BranchInfoController extends Controller
     }
 
 
-      /**
-     * @OA\Get(
-     *     path="/reservas360-backend/public/api/branchoffice",
-     *     summary="Obtener información con filtros y ordenamiento",
-     *     tags={"BranchOffice"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(name="name", in="query", description="Filtrar por nombre de la sucursal", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="address", in="query", description="Filtrar por dirección del negocio", required=false, @OA\Schema(type="string")),
-    
-     *     @OA\Parameter(name="company$businessName", in="query", description="Filtrar por nombre de la empresa", required=false, @OA\Schema(type="string", format="email")),
+    /**
+ * @OA\Get(
+ *     path="/reservas360-backend/public/api/branchoffice",
+ *     summary="Obtener información con filtros y ordenamiento",
+ *     tags={"BranchOffice"},
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(name="uuid", in="query", description="Filtrar por UUID", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="brand_name", in="query", description="Filtrar por nombre de la marca", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="ruc", in="query", description="Filtrar por RUC", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="name", in="query", description="Filtrar por nombre de la sucursal", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="address", in="query", description="Filtrar por dirección del negocio", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="phone", in="query", description="Filtrar por teléfono", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="telephone", in="query", description="Filtrar por teléfono fijo", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="email", in="query", description="Filtrar por correo electrónico", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="company$businessName", in="query", description="Filtrar por razón social de la empresa", required=false, @OA\Schema(type="string")),
+ *     @OA\Parameter(name="from", in="query", description="Fecha de inicio", required=false, @OA\Schema(type="string", format="date")),
+ *     @OA\Parameter(name="to", in="query", description="Fecha de fin", required=false, @OA\Schema(type="string", format="date")),
+ *     @OA\Response(response=200, description="Lista de Sucursales", @OA\JsonContent(ref="#/components/schemas/BranchOffice")),
+ *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="error", type="string")))
+ * )
+ */
 
-     *     @OA\Parameter(name="from", in="query", description="Fecha de inicio", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Parameter(name="to", in="query", description="Fecha de fin", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Response(response=200,description="Lista de Empresas",@OA\JsonContent(ref="#/components/schemas/BranchOffice")),
-     *     @OA\Response(response=422, description="Validación fallida", @OA\JsonContent(type="object", @OA\Property(property="error", type="string")))
-     * )
-     */
 
      public function index(IndexBranchOfficeRequest $request)
      {
+        $respuesta_actualizar_data= $this->getBranchInfo($request);
          return $this->getFilteredResults(
              Branchoffice::class,
              $request,
@@ -100,78 +106,78 @@ class BranchInfoController extends Controller
          return new BranchofficeResource($company);
      }
  
-     /**
-      * @OA\Post(
-      *     path="/reservas360-backend/public/api/branchoffice",
-      *     summary="Crear una nueva sucursal",
-      *     tags={"BranchOffice"},
-      *     security={{"bearerAuth": {}}},
-      *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", required={"name", "numberDocument"}, @OA\Property(property="name", type="string", example="sucursal Ejemplo"), @OA\Property(property="address", type="string", example="123456789"),  @OA\Property(property="company_id", type="integer", example="1"))),
-      *     @OA\Response(response=200, description="sucursal creada exitosamente", @OA\JsonContent(ref="#/components/schemas/BranchOffice")),
-      *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
-      * )
-      */
+//      /**
+//       * @OA\Post(
+//       *     path="/reservas360-backend/public/api/branchoffice",
+//       *     summary="Crear una nueva sucursal",
+//       *     tags={"BranchOffice"},
+//       *     security={{"bearerAuth": {}}},
+//       *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", required={"name", "numberDocument"}, @OA\Property(property="name", type="string", example="sucursal Ejemplo"), @OA\Property(property="address", type="string", example="123456789"),  @OA\Property(property="company_id", type="integer", example="1"))),
+//       *     @OA\Response(response=200, description="sucursal creada exitosamente", @OA\JsonContent(ref="#/components/schemas/BranchOffice")),
+//       *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
+//       * )
+//       */
  
-     public function store(StoreBranchOfficeRequest $request)
-     {
-         $company = $this->branchInfoService->createBranchOffice($request->validated());
-         return new BranchofficeResource($company);
-     }
+//      public function store(StoreBranchOfficeRequest $request)
+//      {
+//          $company = $this->branchInfoService->createBranchOffice($request->validated());
+//          return new BranchofficeResource($company);
+//      }
  
- /**
-  * @OA\Put(
-  *     path="/reservas360-backend/public/api/branchoffice/{id}",
-  *     summary="Actualizar la información de una sucursal",
-  *     tags={"BranchOffice"},
-  *     security={{"bearerAuth": {}}},
-  *     @OA\Parameter(name="id", in="path", description="ID de la sucursal a actualizar", required=true, @OA\Schema(type="integer", example=1)),
-  *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", @OA\Property(property="name", type="string", example="sucursal Ejemplo"), @OA\Property(property="address", type="string", example="123456789"),  @OA\Property(property="company_id", type="integer", example="1"))),
-  *     @OA\Response(response=200, description="sucursal actualizada exitosamente", @OA\JsonContent(ref="#/components/schemas/BranchOffice")),
-  *     @OA\Response(response=404, description="sucursal no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="sucursal no encontrada"))),
-  *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
-  * )
-  */
+//  /**
+//   * @OA\Put(
+//   *     path="/reservas360-backend/public/api/branchoffice/{id}",
+//   *     summary="Actualizar la información de una sucursal",
+//   *     tags={"BranchOffice"},
+//   *     security={{"bearerAuth": {}}},
+//   *     @OA\Parameter(name="id", in="path", description="ID de la sucursal a actualizar", required=true, @OA\Schema(type="integer", example=1)),
+//   *     @OA\RequestBody(required=true, @OA\JsonContent(type="object", @OA\Property(property="name", type="string", example="sucursal Ejemplo"), @OA\Property(property="address", type="string", example="123456789"),  @OA\Property(property="company_id", type="integer", example="1"))),
+//   *     @OA\Response(response=200, description="sucursal actualizada exitosamente", @OA\JsonContent(ref="#/components/schemas/BranchOffice")),
+//   *     @OA\Response(response=404, description="sucursal no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="sucursal no encontrada"))),
+//   *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="Datos inválidos")))
+//   * )
+//   */
  
-     public function update(UpdateBranchOfficeRequest $request, $id)
-     {
-         $validatedData = $request->validated();
+//      public function update(UpdateBranchOfficeRequest $request, $id)
+//      {
+//          $validatedData = $request->validated();
  
-         $company = $this->branchInfoService->getBranchOfficeById($id);
-         if (!$company) {
-             return response()->json([
-                 'error' => 'sucursal no encontrada',
-             ], 404);
-         }
+//          $company = $this->branchInfoService->getBranchOfficeById($id);
+//          if (!$company) {
+//              return response()->json([
+//                  'error' => 'sucursal no encontrada',
+//              ], 404);
+//          }
  
-         $updatedCompany = $this->branchInfoService->updateBranchOffice($company, $validatedData);
-         return new BranchofficeResource($updatedCompany);
-     }
+//          $updatedCompany = $this->branchInfoService->updateBranchOffice($company, $validatedData);
+//          return new BranchofficeResource($updatedCompany);
+//      }
  
-     /**
-      * @OA\Delete(
-      *     path="/reservas360-backend/public/api/branchoffice/{id}",
-      *     summary="Eliminar sucursal por ID",
-      *     tags={"BranchOffice"},
-      *     security={{"bearerAuth": {}}},
-      *     @OA\Parameter(name="id", in="path", description="ID de la sucursal", required=true, @OA\Schema(type="integer", example=1)),
-      *     @OA\Response(response=200, description="sucursal eliminada exitosamente", @OA\JsonContent(type="object", @OA\Property(property="message", type="string", example="sucursal eliminada exitosamente"))),
-      *     @OA\Response(response=404, description="sucursal no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="sucursal no encontrada")))
-      * )
-      */
+//      /**
+//       * @OA\Delete(
+//       *     path="/reservas360-backend/public/api/branchoffice/{id}",
+//       *     summary="Eliminar sucursal por ID",
+//       *     tags={"BranchOffice"},
+//       *     security={{"bearerAuth": {}}},
+//       *     @OA\Parameter(name="id", in="path", description="ID de la sucursal", required=true, @OA\Schema(type="integer", example=1)),
+//       *     @OA\Response(response=200, description="sucursal eliminada exitosamente", @OA\JsonContent(type="object", @OA\Property(property="message", type="string", example="sucursal eliminada exitosamente"))),
+//       *     @OA\Response(response=404, description="sucursal no encontrada", @OA\JsonContent(type="object", @OA\Property(property="error", type="string", example="sucursal no encontrada")))
+//       * )
+//       */
  
-     public function destroy($id)
-     {
-         $deleted = $this->branchInfoService->destroyById($id);
+//      public function destroy($id)
+//      {
+//          $deleted = $this->branchInfoService->destroyById($id);
  
-         if (!$deleted) {
-             return response()->json([
-                 'error' => 'sucursal no encontrada o no se pudo eliminar',
-             ], 404);
-         }
+//          if (!$deleted) {
+//              return response()->json([
+//                  'error' => 'sucursal no encontrada o no se pudo eliminar',
+//              ], 404);
+//          }
  
-         return response()->json([
-             'message' => 'sucursal eliminada exitosamente',
-         ], 200);
-     }
+//          return response()->json([
+//              'message' => 'sucursal eliminada exitosamente',
+//          ], 200);
+//      }
 
 }

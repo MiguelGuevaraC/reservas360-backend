@@ -266,6 +266,33 @@
                 "operationId": "48e16eab9956059131fc9b54301c5932",
                 "parameters": [
                     {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Filtrar por UUID",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "brand_name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de la marca",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "ruc",
+                        "in": "query",
+                        "description": "Filtrar por RUC",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "name",
                         "in": "query",
                         "description": "Filtrar por nombre de la sucursal",
@@ -284,13 +311,39 @@
                         }
                     },
                     {
-                        "name": "company$businessName",
+                        "name": "phone",
                         "in": "query",
-                        "description": "Filtrar por nombre de la empresa",
+                        "description": "Filtrar por teléfono",
                         "required": false,
                         "schema": {
-                            "type": "string",
-                            "format": "email"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "telephone",
+                        "in": "query",
+                        "description": "Filtrar por teléfono fijo",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Filtrar por correo electrónico",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company$businessName",
+                        "in": "query",
+                        "description": "Filtrar por razón social de la empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     {
@@ -316,7 +369,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Lista de Empresas",
+                        "description": "Lista de Sucursales",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -333,74 +386,6 @@
                                     "properties": {
                                         "error": {
                                             "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "BranchOffice"
-                ],
-                "summary": "Crear una nueva sucursal",
-                "operationId": "0a24d2fbd3e581182026e425a3269458",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "numberDocument"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "sucursal Ejemplo"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "company_id": {
-                                        "type": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "sucursal creada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BranchOffice"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
                                         }
                                     },
                                     "type": "object"
@@ -468,165 +453,15 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "put": {
-                "tags": [
-                    "BranchOffice"
-                ],
-                "summary": "Actualizar la información de una sucursal",
-                "operationId": "606f8da4eabb9cb2d66887ed5d421164",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la sucursal a actualizar",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "sucursal Ejemplo"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "company_id": {
-                                        "type": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "sucursal actualizada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BranchOffice"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "sucursal no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "sucursal no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "BranchOffice"
-                ],
-                "summary": "Eliminar sucursal por ID",
-                "operationId": "de3ba1bcf6c22e47baa1ad5f9f698174",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la sucursal",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "sucursal eliminada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "sucursal eliminada exitosamente"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "sucursal no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "sucursal no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
-        "/reservas360-backend/public/api/getdata-categories": {
+        "/reservas360-backend/public/api/getdata-category": {
             "get": {
                 "tags": [
                     "Api360"
                 ],
                 "summary": "Actualizar Categorias la data de la api Externa",
-                "operationId": "d0b0c1e8dbe89c4c378521fefffcec24",
+                "operationId": "d6ba616f731c281f1dfc55a3e7361505",
                 "responses": {
                     "200": {
                         "description": "Data Actualizada de Categorias",
@@ -738,66 +573,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Crear una nueva categoria",
-                "operationId": "5565e853a998f09188327b8c8ea72e8e",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "numberDocument"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "categoria Ejemplo"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "categoria creada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Category"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/reservas360-backend/public/api/category/{id}": {
@@ -826,148 +601,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Category"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Categoria no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Categoria no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Actualizar la información de una categoria",
-                "operationId": "6293e3bc7f3ab1d5a215cad1ab287145",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la categoria a actualizar",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "categoria Ejemplo"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "categoria actualizada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Category"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Categoria no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Categoria no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Eliminar categoria por ID",
-                "operationId": "9b4d4512e5e2dbdb8dcee46b190db84a",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la categoria",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "categoria eliminada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "categoria eliminada exitosamente"
-                                        }
-                                    },
-                                    "type": "object"
                                 }
                             }
                         }
@@ -1045,18 +678,45 @@
                 "operationId": "fb6f43c0d5d2f6400eab5b72cd27d824",
                 "parameters": [
                     {
-                        "name": "numberDocument",
+                        "name": "ruc",
                         "in": "query",
-                        "description": "Filtrar por número de documento",
+                        "description": "Filtrar por RUC",
                         "required": false,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "businessName",
+                        "name": "name",
                         "in": "query",
-                        "description": "Filtrar por nombre del negocio",
+                        "description": "Filtrar por nombre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Filtrar por dirección",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Filtrar por teléfono",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "telephone",
+                        "in": "query",
+                        "description": "Filtrar por teléfono fijo",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1125,83 +785,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Company"
-                ],
-                "summary": "Crear una nueva compañía",
-                "operationId": "7ce130f63d40fc51f73dd7d4519ac144",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "numberDocument"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Compañía Ejemplo"
-                                    },
-                                    "numberDocument": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "businessName": {
-                                        "type": "string",
-                                        "example": "Mi Empresa S.A."
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "empresa@ejemplo.com"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "999999999"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Compañía creada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Company"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/reservas360-backend/public/api/company/{id}": {
@@ -1230,157 +813,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Company"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Compañía no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Compañía no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Company"
-                ],
-                "summary": "Actualizar la información de una compañía",
-                "operationId": "348cb442e2a87ac9157af66512da3d3d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la compañía a actualizar",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "numberDocument": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "businessName": {
-                                        "type": "string",
-                                        "example": "Mi Empresa Actualizada S.A."
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "actualizado@example.com"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Compañía actualizada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Company"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Compañía no encontrada",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Compañía no encontrada"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Company"
-                ],
-                "summary": "Eliminar compañía por ID",
-                "operationId": "f8e1f9432a28c77d7efd99d3cf6708e2",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la compañía",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Compañía eliminada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Compañía eliminada exitosamente"
-                                        }
-                                    },
-                                    "type": "object"
                                 }
                             }
                         }
@@ -1606,66 +1038,6 @@
                         "bearerAuth": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Crear una nueva categoria",
-                "operationId": "f6501863d8642c79d92ccc9d5a3d575e",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "numberDocument"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "categoria Ejemplo"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "categoria creada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Product"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
             }
         },
         "/reservas360-backend/public/api/product/{id}": {
@@ -1694,148 +1066,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Product"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Producto no encontrado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Producto no encontrado"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Actualizar la información de una categoria",
-                "operationId": "052aeac4ffb43f857ac5196df342c7c2",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la categoria a actualizar",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "categoria Ejemplo"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "categoria actualizada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Product"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Producto no encontrado",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Producto no encontrado"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error de validación",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string",
-                                            "example": "Datos inválidos"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Eliminar categoria por ID",
-                "operationId": "bfd8e1391f53f8ba00810b0664af0308",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID de la categoria",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "categoria eliminada exitosamente",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "categoria eliminada exitosamente"
-                                        }
-                                    },
-                                    "type": "object"
                                 }
                             }
                         }
@@ -2185,6 +1415,14 @@
                         "type": "integer",
                         "example": 1
                     },
+                    "brand_name": {
+                        "type": "string",
+                        "example": "Marca XYZ"
+                    },
+                    "ruc": {
+                        "type": "string",
+                        "example": "12345678901"
+                    },
                     "name": {
                         "type": "string",
                         "example": "Sucursal 01"
@@ -2192,6 +1430,26 @@
                     "address": {
                         "type": "string",
                         "example": "AV. 123"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "987654321"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "654321987"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "example@domain.com"
+                    },
+                    "server_id": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "company_id": {
+                        "type": "integer",
+                        "example": 5
                     }
                 },
                 "type": "object"
@@ -2223,11 +1481,11 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "numberDocument": {
+                    "ruc": {
                         "type": "string",
                         "example": "123456789"
                     },
-                    "businessName": {
+                    "name": {
                         "type": "string",
                         "example": "Mi Empresa S.A."
                     },
@@ -2239,6 +1497,10 @@
                         "type": "string",
                         "example": "999999999"
                     },
+                    "telephone": {
+                        "type": "string",
+                        "example": "987654321"
+                    },
                     "email": {
                         "type": "string",
                         "format": "email",
@@ -2249,8 +1511,8 @@
                         "example": "active"
                     },
                     "server_id": {
-                        "type": "string",
-                        "example": "1"
+                        "type": "integer",
+                        "example": 1
                     },
                     "branchoffices": {
                         "type": "array",
