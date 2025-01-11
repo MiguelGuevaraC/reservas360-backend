@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\BranchInfoController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +19,12 @@ Route::post('user', [UserController::class, 'store']);
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
 
-    
-    require __DIR__ . '/Api/AuthApi.php';//AUTHENTICATE
-    require __DIR__ . '/Api/SearchApi.php';// SEARCH
+    require __DIR__ . '/Api/AuthApi.php'; //AUTHENTICATE
+    require __DIR__ . '/Api/SearchApi.php'; // SEARCH
     require __DIR__ . '/Api/ClientApi.php'; //CLIENTS
     require __DIR__ . '/Api/CompanyApi.php'; //CLIENTS
     require __DIR__ . '/Api/BranchOfficeApi.php'; //BRANCHOFFICE
     require __DIR__ . '/Api/CategoryApi.php'; //CATEGORY
-    require __DIR__ . '/Api/ProductApi.php'; //CATEGORY
-    require __DIR__ . '/Api/PersonApi.php'; //CATEGORY
+    require __DIR__ . '/Api/ProductApi.php'; //PRODUCT
+    require __DIR__ . '/Api/PersonApi.php'; //PERSON
 });

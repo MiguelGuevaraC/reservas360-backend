@@ -36,7 +36,7 @@ class CompanyResource extends JsonResource
             'email' => $this->email ?? "Sin correo",
             'state' => $this->state,
             'server_id' => $this->server_id,
-            'branchoffices' => $this->branchoffices ?? [],
+            'branchoffices' => $this->branchoffices ? BranchOfficeResource::collection($this->branchoffices) : [],
         ];
     }
 

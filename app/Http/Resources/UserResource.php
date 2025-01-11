@@ -23,7 +23,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'email' => $this->email ?? 'Sin Correo',
-            'person' => $this?->person ?? 'Sin Persona',
+            'person' => $this->person ? new PersonResource($this->person) : 'Sin Persona',
         ];
     }
 }
