@@ -109,8 +109,23 @@ class PersonResource extends JsonResource
  *     ),
  * )
  */
-    public function toArray($request)
-    {
-        return parent::toArray($request);
-    }
+public function toArray($request)
+{
+    return [
+        'id' => $this->id,
+        'type_of_document' => $this->typeofDocument, // Renombrado para consistencia con formato snake_case
+        'document_number' => $this->documentNumber,
+        'names' => $this->names,
+        'father_surname' => $this->fathersurname,
+        'mother_surname' => $this->mothersurname,
+        'business_name' => $this->businessName,
+        'address' => $this->address,
+        'phone' => $this->phone,
+        'email' => $this->email,
+        'origin' => $this->origin,
+        'occupation' => $this->ocupation, // Corrección de typo: 'ocupation' -> 'occupation'
+        'state' => $this->state,
+        'server_id' => $this->server_id,
+    ];
+}
 }

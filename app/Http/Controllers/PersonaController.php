@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PersonRequest\IndexPersonRequest;
-use App\Http\Resources\CompanyResource;
+use App\Http\Resources\PersonResource;
 use App\Models\Person;
 use Illuminate\Http\Request;
 
@@ -37,7 +37,7 @@ class PersonaController extends Controller
             $request,
             Person::filters,
             Person::sorts,
-            CompanyResource::class
+            PersonResource::class
         );
     }
 
