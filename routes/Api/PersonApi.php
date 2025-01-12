@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get('person', [PersonaController::class, 'index']);
-    Route::post('person', [PersonaController::class, 'post']);
+    Route::post('person', [PersonaController::class, 'store']);
     Route::get('person/{id}', [PersonaController::class, 'show']);
-    Route::put('person/{id}', [PersonaController::class, 'put']);
+    Route::put('person/{id}', [PersonaController::class, 'update']);
     Route::delete('person/{id}', [PersonaController::class, 'destroy']);
 
     Route::get('getdata-person', [PersonaController::class, 'getPersonData']);

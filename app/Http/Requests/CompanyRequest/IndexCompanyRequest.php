@@ -3,8 +3,8 @@
 namespace App\Http\Requests\CompanyRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-class IndexCompanyRequest extends FormRequest
+use App\Http\Requests\IndexRequest;
+class IndexCompanyRequest extends IndexRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\BranchOfficeRequest;
 
+use App\Http\Requests\IndexRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IndexBranchOfficeRequest extends FormRequest
+class IndexBranchOfficeRequest extends IndexRequest
 {
     /**
      * Determine if the user is authorized to make this request.
