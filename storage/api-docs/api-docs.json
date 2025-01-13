@@ -841,6 +841,177 @@
                 ]
             }
         },
+        "/reservas360-backend/public/api/environment": {
+            "get": {
+                "tags": [
+                    "Environment"
+                ],
+                "summary": "Obtener información con filtros y ordenamiento",
+                "operationId": "2f2e5bbd07a8b71aed736ccac63d6915",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filtrar por nombre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Filtrar por descripción",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "route",
+                        "in": "query",
+                        "description": "Filtrar por ruta",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtrar por estado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company$business_name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "description": "Filtrar por id Empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Fecha de inicio",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Fecha de fin",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Entornos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Environment"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/environment/{id}": {
+            "get": {
+                "tags": [
+                    "Environment"
+                ],
+                "summary": "Obtener detalles de un environment por ID",
+                "operationId": "6b046b6d8e92098da21a39ae95f2d63b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la persona",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "persona encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Environment"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Environment No Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Environment No Encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/reservas360-backend/public/api/person": {
             "get": {
                 "tags": [
@@ -1079,6 +1250,177 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Producto no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/gia-backend/public/api/station": {
+            "get": {
+                "tags": [
+                    "Environment"
+                ],
+                "summary": "Obtener información con filtros y ordenamiento",
+                "operationId": "5c88efc99d0b0e2b1018509e2a68e13f",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filtrar por nombre",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Filtrar por descripción",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "route",
+                        "in": "query",
+                        "description": "Filtrar por ruta",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtrar por estado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company$business_name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "query",
+                        "description": "Filtrar por id Empresa",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Fecha de inicio",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Fecha de fin",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Entornos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Environment"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/station/{id}": {
+            "get": {
+                "tags": [
+                    "Station"
+                ],
+                "summary": "Obtener detalles de un station por ID",
+                "operationId": "88ec3d17064cefdb67e9c7f3e12f58a7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la persona",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "persona encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Station"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Station No Encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Station No Encontrado"
                                         }
                                     },
                                     "type": "object"
@@ -1523,6 +1865,44 @@
                 },
                 "type": "object"
             },
+            "Environment": {
+                "title": "Environment",
+                "description": "Environment model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Production"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Primary production environment"
+                    },
+                    "route": {
+                        "type": "string",
+                        "example": "/environment/production"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "server_id": {
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "company_id": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "company": {
+                        "$ref": "#/components/schemas/Company"
+                    }
+                },
+                "type": "object"
+            },
             "Person": {
                 "title": "person",
                 "description": "Modelo de Persona",
@@ -1650,6 +2030,44 @@
                 },
                 "type": "object"
             },
+            "Station": {
+                "title": "Station",
+                "description": "Station model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Station A"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Monitoring"
+                    },
+                    "status": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "server_id": {
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "route": {
+                        "type": "string",
+                        "example": "/station/a"
+                    },
+                    "environment_id": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "environment": {
+                        "$ref": "#/components/schemas/Environment"
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "title": "User",
                 "description": "User model",
@@ -1706,12 +2124,20 @@
             "description": "Company"
         },
         {
+            "name": "Environment",
+            "description": "Environment"
+        },
+        {
             "name": "Person",
             "description": "Person"
         },
         {
             "name": "Product",
             "description": "Product"
+        },
+        {
+            "name": "Station",
+            "description": "Station"
         },
         {
             "name": "Authentication",

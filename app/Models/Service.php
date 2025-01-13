@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model
+class Service extends Model
 {
     use SoftDeletes;
     protected $fillable = [
         'id',
-        'ruc',
         'name',
-        'address',
-        'phone',
-        'telephone',
-        'email',
-        'state',
+        'description',
+        'price',
+        'time_minutes',
+        'status',
+
         'server_id',
         'created_at',
         'updated_at',
@@ -30,12 +29,10 @@ class Company extends Model
     ];
     const filters = [
         'name' => 'like',
-        'numberDocument' => 'like',
-        'ruc' => 'like',
-        'address' => 'like',
-        'email' => 'like',
-        'phone' => 'like',
-        'telephone' => 'like',
+        'description' => 'like',
+        'price' => 'like',
+        'time_minutes' => 'like',
+        'status' => 'like',
     ];
 
     /**
@@ -43,24 +40,18 @@ class Company extends Model
      */
     const sorts = [
         'name' => 'desc',
-        'ruc' => 'desc',
-        'address' => 'desc',
+        'id' => 'desc',
     ];
+
     const getfields = [
-        'ruc',
         'name',
-        'address',
-        'phone',
-        'telephone',
-        'email',
-        'state',
-        'server_id'
+        'name',
+        'description',
+        'price',
+        'time_minutes',
+        'status',
+        'server_id',
+        'created_at',
     ];
-
-    public function branchoffices()
-    {
-        return $this->hasMany(Branchoffice::class);
-    }
-
 
 }

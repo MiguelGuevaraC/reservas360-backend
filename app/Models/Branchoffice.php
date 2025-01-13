@@ -62,4 +62,9 @@ class Branchoffice extends Model
     {
         return $this->belongsTo(Company::class,'company_id');
     }
+
+    public function environments()
+    {
+        return $this->hasMany(Environment::class);
+    }
 }

@@ -37,6 +37,7 @@ class CompanyResource extends JsonResource
             'state' => $this->state,
             'server_id' => $this->server_id,
             'branchoffices' => $this->branchoffices ? BranchOfficeResource::collection($this->branchoffices) : [],
+
         ];
     }
 
