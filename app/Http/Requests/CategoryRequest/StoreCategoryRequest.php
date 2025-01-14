@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\CategoryRequest;
 
+use App\Http\Requests\StoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCategoryRequest extends FormRequest
+class StoreCategoryRequest extends StoreRequest
 {
     /**
      * Determine if the user is authorized to make this request.

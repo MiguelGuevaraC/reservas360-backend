@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\CategoryRequest;
 
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends UpdateRequest
 {
     /**
      * Determine if the user is authorized to make this request.

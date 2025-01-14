@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\CompanyRequest;
 
+use App\Http\Requests\StoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreCompanyRequest extends FormRequest
+class StoreCompanyRequest extends StoreRequest
 {
     /**
      * Determine if the user is authorized to make this request.

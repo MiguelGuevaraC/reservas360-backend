@@ -22,9 +22,10 @@ class BranchofficeResource extends JsonResource
  *     @OA\Property(property="server_id", type="integer", example=10),
  *     @OA\Property(property="company_id", type="integer", example=5),
  * 
- *     @OA\Property(property="branchoffices", type="array", @OA\Items(ref="#/components/schemas/BranchOffice")),
+ 
  *     @OA\Property(property="products", type="array", @OA\Items(ref="#/components/schemas/Product")),
- *     @OA\Property(property="services", type="array", @OA\Items(ref="#/components/schemas/Service"))
+ *     @OA\Property(property="services", type="array", @OA\Items(ref="#/components/schemas/Service")),
+ *     @OA\Property(property="environments", type="array", @OA\Items(ref="#/components/schemas/Environment")),
  * )
  */
     public function toArray($request)

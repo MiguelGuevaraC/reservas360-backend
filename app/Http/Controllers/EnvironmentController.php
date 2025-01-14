@@ -7,6 +7,7 @@ use App\Http\Requests\EnvironmentRequest\IndexEnvironmentRequest;
 use App\Http\Resources\EnvironmentResource;
 use App\Models\Environment;
 use App\Services\EnvironmentService;
+use Illuminate\Http\Request;
 
 class EnvironmentController extends Controller
 {
@@ -76,4 +77,22 @@ class EnvironmentController extends Controller
         return new EnvironmentResource($environment);
     }
 
+    /**
+     * @OA\GET(
+     *     path="/reservas360-backend/public/api/getdata-environment",
+     *     summary="Actualizar información de Ambientes desde API externa",
+ *     tags={"Api360"},
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(name="uuid", in="query", required=true, description="Identificador único", @OA\Schema(type="string", example="123e4567-e89b-12d3-a456-426614174000")),
+ *     @OA\Response(response=200, description="Data actualizada", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true"), @OA\Property(property="message", type="string", example="Data actualizada de Categorías"))),
+ *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false"), @OA\Property(property="message", type="string", example="Error al obtener datos")))
+ * )
+ */
+    public function getEnvironmentData(Request $request)
+    {
+        $uuid = $request->input('uuid', '');
+        $data = '';
+        // $data = $this->environmentService->fetch_environments($uuid);
+        return response()->json($data); // Devolvemos la respuesta
+    }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\CompanyRequest;
 
+use App\Http\Requests\UpdateRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCompanyRequest extends FormRequest
+class UpdateCompanyRequest extends UpdateRequest
 {
     /**
      * Determine if the user is authorized to make this request.

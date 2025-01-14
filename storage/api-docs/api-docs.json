@@ -216,16 +216,32 @@
                 ],
                 "summary": "Actualizar Sucursales la data de la api Externa",
                 "operationId": "a8c5156ccf7a5d5f6a82bf5cf97ddba9",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Data Actualizada de Sucursales",
+                        "description": "Data actualizada",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
                                         "message": {
                                             "type": "string",
-                                            "example": "Data Actualizada de Sucursales"
+                                            "example": "Data actualizada de Categorías"
                                         }
                                     },
                                     "type": "object"
@@ -234,14 +250,18 @@
                         }
                     },
                     "422": {
-                        "description": "Validación fallida",
+                        "description": "Error de validación",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
                                         "message": {
                                             "type": "string",
-                                            "example": "Error al obtener datos de la API externa."
+                                            "example": "Error al obtener datos"
                                         }
                                     },
                                     "type": "object"
@@ -460,18 +480,34 @@
                 "tags": [
                     "Api360"
                 ],
-                "summary": "Actualizar Categorias la data de la api Externa",
+                "summary": "Actualizar Categorías con datos externos",
                 "operationId": "d6ba616f731c281f1dfc55a3e7361505",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Data Actualizada de Categorias",
+                        "description": "Data actualizada",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
                                         "message": {
                                             "type": "string",
-                                            "example": "Data Actualizada de Categorias"
+                                            "example": "Data actualizada de Categorías"
                                         }
                                     },
                                     "type": "object"
@@ -480,14 +516,18 @@
                         }
                     },
                     "422": {
-                        "description": "Validación fallida",
+                        "description": "Error de validación",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
                                         "message": {
                                             "type": "string",
-                                            "example": "Error al obtener datos de la API externa."
+                                            "example": "Error al obtener datos"
                                         }
                                     },
                                     "type": "object"
@@ -636,27 +676,55 @@
                 ],
                 "summary": "Actualizar información de empresas desde API externa",
                 "operationId": "68795a59a82fbe45e7022d192dad5788",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Datos actualizados",
+                        "description": "Data actualizada",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": "true",
-                                    "message": "Datos actualizados"
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data actualizada de Categorías"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
                     },
                     "422": {
-                        "description": "Error al obtener datos",
+                        "description": "Error de validación",
                         "content": {
                             "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "status": "false",
-                                    "message": "Error al obtener datos"
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -1012,6 +1080,74 @@
                 ]
             }
         },
+        "/reservas360-backend/public/api/getdata-environment": {
+            "get": {
+                "tags": [
+                    "Api360"
+                ],
+                "summary": "Actualizar información de Ambientes desde API externa",
+                "operationId": "ca9beb2267c3c2182b2072f556b3c082",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data actualizada de Categorías"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/reservas360-backend/public/api/person": {
             "get": {
                 "tags": [
@@ -1124,6 +1260,74 @@
                                     "properties": {
                                         "error": {
                                             "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/getdata-product": {
+            "get": {
+                "tags": [
+                    "Api360"
+                ],
+                "summary": "Actualizar Productos la data de la api Externa",
+                "operationId": "474a7ff20948ce0578417cb1fafad421",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data actualizada de Categorías"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos"
                                         }
                                     },
                                     "type": "object"
@@ -1265,13 +1469,261 @@
                 ]
             }
         },
-        "/gia-backend/public/api/station": {
+        "/reservas360-backend/public/api/getdata-service": {
             "get": {
                 "tags": [
-                    "Environment"
+                    "Api360"
+                ],
+                "summary": "Actualizar Categorias la data de la api Externa",
+                "operationId": "7552e15440867d509df928e7741c5de1",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data actualizada de Categorías"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/service": {
+            "get": {
+                "tags": [
+                    "Service"
                 ],
                 "summary": "Obtener información con filtros y ordenamiento",
-                "operationId": "5c88efc99d0b0e2b1018509e2a68e13f",
+                "operationId": "1f77111d6eac53e2cb24d2ee55d23664",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de la categoría",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Filtrar por descripción de la categoría",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "description": "Filtrar por precio",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "time_minutes",
+                        "in": "query",
+                        "description": "Filtrar por tiempo en minutos",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filtrar por estado (activo/inactivo)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Filtrar por ID de la categoría",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "category&name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de la categoría asociada",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Fecha de inicio",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "Fecha de fin",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Empresas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validación fallida",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/service/{id}": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Obtener detalles de una categoria por ID",
+                "operationId": "b930f6d479f27806c99ce235a518e388",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoria",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "categoria encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categoria no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Categoria no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/station": {
+            "get": {
+                "tags": [
+                    "Station"
+                ],
+                "summary": "Obtener información con filtros y ordenamiento",
+                "operationId": "235ba1f344c29fcc17c9096c215812d9",
                 "parameters": [
                     {
                         "name": "name",
@@ -1421,6 +1873,74 @@
                                         "error": {
                                             "type": "string",
                                             "example": "Station No Encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reservas360-backend/public/api/getdata-station": {
+            "get": {
+                "tags": [
+                    "Api360"
+                ],
+                "summary": "Actualizar información de Estaciones desde API externa",
+                "operationId": "c1edc89203803cf559dddd39b5f0ad81",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "description": "Identificador único",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "123e4567-e89b-12d3-a456-426614174000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data actualizada de Categorías"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error al obtener datos"
                                         }
                                     },
                                     "type": "object"
@@ -1792,6 +2312,24 @@
                     "company_id": {
                         "type": "integer",
                         "example": 5
+                    },
+                    "products": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "services": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Service"
+                        }
+                    },
+                    "environments": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Environment"
+                        }
                     }
                 },
                 "type": "object"
@@ -1897,8 +2435,11 @@
                         "type": "integer",
                         "example": 3
                     },
-                    "company": {
-                        "$ref": "#/components/schemas/Company"
+                    "stations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Station"
+                        }
                     }
                 },
                 "type": "object"
@@ -2030,6 +2571,41 @@
                 },
                 "type": "object"
             },
+            "Service": {
+                "title": "Service",
+                "description": "Service model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Sucursal 01"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Sucursal 01"
+                    },
+                    "stock": {
+                        "type": "string",
+                        "example": "Sucursal 01"
+                    },
+                    "price": {
+                        "type": "string",
+                        "example": "Sucursal 01"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "true"
+                    },
+                    "category_id": {
+                        "type": "string",
+                        "example": "true"
+                    }
+                },
+                "type": "object"
+            },
             "Station": {
                 "title": "Station",
                 "description": "Station model",
@@ -2134,6 +2710,10 @@
         {
             "name": "Product",
             "description": "Product"
+        },
+        {
+            "name": "Service",
+            "description": "Service"
         },
         {
             "name": "Station",

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -46,9 +45,16 @@ class Environment extends Model
         'description' => 'desc',
 
     ];
-
+    const getfields = [
+        'name',
+        'description',
+        'route',
+        'status',
+        'server_id',
+        'branchoffice_id',
+    ];
     public function branchoffice()
     {
-        return $this->belongsTo(Branchoffice::class,'branchoffice_id');
+        return $this->belongsTo(Branchoffice::class, 'branchoffice_id');
     }
 }

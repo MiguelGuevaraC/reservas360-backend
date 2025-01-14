@@ -24,6 +24,19 @@ class ProductController extends Controller
 
     }
 
+     /**
+     * @OA\GET(
+     *     path="/reservas360-backend/public/api/getdata-product",
+     *     summary="Actualizar Productos la data de la api Externa",
+ *     tags={"Api360"},
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Parameter(name="uuid", in="query", required=true, description="Identificador único", @OA\Schema(type="string", example="123e4567-e89b-12d3-a456-426614174000")),
+ *     @OA\Response(response=200, description="Data actualizada", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="true"), @OA\Property(property="message", type="string", example="Data actualizada de Categorías"))),
+ *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false"), @OA\Property(property="message", type="string", example="Error al obtener datos")))
+ * )
+ */
+
+
     public function getProducts(Request $request)
     {
 

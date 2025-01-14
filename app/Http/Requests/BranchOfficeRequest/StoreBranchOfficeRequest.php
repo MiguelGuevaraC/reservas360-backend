@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\BranchOfficeRequest;
 
+use App\Http\Requests\StoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBranchOfficeRequest extends FormRequest
+class StoreBranchOfficeRequest extends StoreRequest
 {
     /**
      * Determine if the user is authorized to make this request.

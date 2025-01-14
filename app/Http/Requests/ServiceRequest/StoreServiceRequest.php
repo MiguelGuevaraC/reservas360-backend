@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\ProductRequest;
+namespace App\Http\Requests\ServiceRequest;
 
-use App\Http\Requests\UpdateRequest;
+use App\Http\Requests\StoreRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateProductRequest extends UpdateRequest
+class StoreServiceRequest extends StoreRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,21 +14,16 @@ class UpdateProductRequest extends UpdateRequest
      */
     public function authorize()
     {
-        return true;
+        return true; // Cambia esto si necesitas autorización específica
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255', // Puede ser nulo
-            'photo' => 'nullable|string', // Puede ser una URL o cadena vacía
-            'stock' => 'required|numeric', // Validación para cantidades numéricas
+            'time_minutes' => 'nullable|string', // Puede ser una URL o cadena vacía
+          
             'price' => 'required|numeric|min:0', // Precio debe ser mayor o igual a 0
             'status' => 'required|boolean', // Asegurarse de que sea true o false
             'category_id' => 'required|exists:categories,id,deleted_at,NULL', // Validar relación existente
@@ -44,9 +38,9 @@ class UpdateProductRequest extends UpdateRequest
             'name.max' => 'El nombre no puede tener más de 255 caracteres.',
             'description.string' => 'La descripción debe ser una cadena de texto.',
             'description.max' => 'La descripción no puede tener más de 255 caracteres.',
-            'stock.required' => 'El stock es obligatorio.',
-            'stock.numeric' => 'El stock debe ser un valor numérico.',
-          
+            'time_minutes.required' => 'El time_minutes es obligatorio.',
+      
+      
             'price.required' => 'El precio es obligatorio.',
             'price.numeric' => 'El precio debe ser un valor numérico.',
             'price.min' => 'El precio no puede ser menor a 0.',
@@ -56,5 +50,5 @@ class UpdateProductRequest extends UpdateRequest
             'category_id.exists' => 'La categoría proporcionada no existe.',
         ];
     }
-    
+
 }
