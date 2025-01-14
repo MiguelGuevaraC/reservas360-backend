@@ -40,7 +40,7 @@ class StationController extends Controller
 
     public function index(IndexStationRequest $request)
     {
-
+        $respuesta_actualizar_data = $this->getStationsData($request);
         return $this->getFilteredResults(
             Station::class,
             $request,
@@ -89,6 +89,7 @@ class StationController extends Controller
      */
     public function getStationsData(Request $request)
     {
+        
         $uuid = $request->input('uuid', '');
         $data = '';
         // $data = $this->environmentService->fetch_stations($uuid);

@@ -41,7 +41,7 @@ class EnvironmentController extends Controller
 
     public function index(IndexEnvironmentRequest $request)
     {
-
+        $respuesta_actualizar_data = $this->getEnvironmentData($request);
         return $this->getFilteredResults(
             Environment::class,
             $request,

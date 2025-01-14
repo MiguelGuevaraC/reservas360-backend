@@ -22,6 +22,7 @@ class Api360Service
             Company::class,
             Company::getfields,
             $uuid,
+            null,
             []// Relación dinámica
         );
     }
@@ -35,21 +36,48 @@ class Api360Service
             Branchoffice::class,
             Branchoffice::getfields,
             $uuid,
+            null,
             ['company_id' => Company::class]// Relación dinámica
         );
     }
 
     public function fetch_categories(?string $uuid = '')
     {
+        // Obtener la primera sucursal
+        $branch = $this->fetch_branches($uuid);
 
-        return $this->fetchDataAndSync(
-            'categories',
-            'categories',
-            Category::class,
-            Category::getfields,
-            $uuid,
-            ['category_id' => Category::class]// Relación dinámica
-        );
+        // Verificar si la respuesta tiene datos de la sucursal
+        if (($branch['data']['branch'])) {
+
+            $firstBranch = $branch['data']['branch']; // Asegúrate de que el formato de respuesta es correcto
+
+            // Buscar la sucursal en el modelo Branchoffice por server_id
+            $branchOffice = Branchoffice::where('server_id', $firstBranch['id'])->first();
+
+            if ($branchOffice) {
+                return $this->fetchDataAndSync(
+                    'categories',
+                    'categories',
+                    Category::class,
+                    Category::getfields,
+                    $uuid,
+                    $branchOffice,
+                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                );
+            } else {
+                return [
+                    'status' => false,
+                    'message' => "No se encontró la sucursal con server_id: {$firstBranch['id']}.",
+                    'data' => [],
+                ];
+            }
+        }
+
+        return [
+            'status' => false,
+            'message' => "No se pudo obtener la primera sucursal.",
+            'data' => [],
+        ];
     }
 
     public function fetch_products(?string $uuid = '')
@@ -59,7 +87,7 @@ class Api360Service
             'products',
             Product::class,
             Product::getfields,
-            $uuid,
+            $uuid, null,
             ['category_id' => Category::class]// Relación dinámica
         );
     }
@@ -71,33 +99,87 @@ class Api360Service
             'services',
             Service::class,
             Service::getfields,
-            $uuid,
+            $uuid, null,
             ['category_id' => Category::class]// Relación dinámica
-        );
-    }
-
-    public function fetch_environments(?string $uuid = '')
-    {
-        return $this->fetchDataAndSync(
-            'environments',
-            'environments',
-            Environment::class,
-            Environment::getfields,
-            $uuid,
-            ['branchoffice_id' => Branchoffice::class]// Relación dinámica
         );
     }
 
     public function fetch_stations(?string $uuid = '')
     {
-        return $this->fetchDataAndSync(
-            'stations',
-            'stations',
-            Station::class,
-            Station::getfields,
-            $uuid,
-            ['environment_id' => Environment::class]// Relación dinámica
-        );
+        // Obtener la primera sucursal
+        $branch = $this->fetch_branches($uuid);
+
+        // Verificar si la respuesta tiene datos de la sucursal
+        if (($branch['data']['branch'])) {
+
+            $firstBranch = $branch['data']['branch']; // Asegúrate de que el formato de respuesta es correcto
+
+            // Buscar la sucursal en el modelo Branchoffice por server_id
+            $branchOffice = Branchoffice::where('server_id', $firstBranch['id'])->first();
+
+            if ($branchOffice) {
+                return $this->fetchDataAndSync(
+                    'stations',
+                    'stations',
+                    Station::class,
+                    Station::getfields,
+                    $uuid,
+                    $branchOffice,
+                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                );
+            } else {
+                return [
+                    'status' => false,
+                    'message' => "No se encontró la sucursal con server_id: {$firstBranch['id']}.",
+                    'data' => [],
+                ];
+            }
+        }
+
+        return [
+            'status' => false,
+            'message' => "No se pudo obtener la primera sucursal.",
+            'data' => [],
+        ];
+    }
+
+    public function fetch_environments(?string $uuid = '')
+    {
+        // Obtener la primera sucursal
+        $branch = $this->fetch_branches($uuid);
+
+        // Verificar si la respuesta tiene datos de la sucursal
+        if (($branch['data']['branch'])) {
+
+            $firstBranch = $branch['data']['branch']; // Asegúrate de que el formato de respuesta es correcto
+
+            // Buscar la sucursal en el modelo Branchoffice por server_id
+            $branchOffice = Branchoffice::where('server_id', $firstBranch['id'])->first();
+
+            if ($branchOffice) {
+                return $this->fetchDataAndSync(
+                    'environments',
+                    'environments',
+                    Environment::class,
+                    Environment::getfields,
+                    $uuid,
+                    $branchOffice,
+                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                );
+            } else {
+                return [
+                    'status' => false,
+                    'message' => "No se encontró la sucursal con server_id: {$firstBranch['id']}.",
+                    'data' => [],
+                ];
+            }
+        }
+
+        return [
+            'status' => false,
+            'message' => "No se pudo obtener la primera sucursal.",
+            'data' => [],
+        ];
     }
 
     public function fetchDataAndSync(
@@ -106,43 +188,50 @@ class Api360Service
         string $modelClass, // Nombre del modelo
         array $fields, // Campos del modelo a sincronizar
         string $authorizationUiid, // Token de autorización
+        ?Branchoffice $branchoffice = null, // Oficina relacionada, si aplica
         array $relations = []// Relaciones externas (campo => modelo)
     ) {
         try {
+            // Construir el endpoint completo
             $endpoint = "https://sistema.360sys.com.pe/api/app-mobile/" . $endpoint;
 
-            $authorizationUiid = $authorizationUiid != '' ? $authorizationUiid : '7554dbfe-74ea-4dfb-b997-47633f9b5761';
-            $response = Http::withHeaders([
-                'Authorization' => $authorizationUiid,
-            ])->get($endpoint);
+            // Token de autorización predeterminado si no se proporciona
+            $authorizationUiid = !empty($authorizationUiid) ? $authorizationUiid : '7554dbfe-74ea-4dfb-b997-47633f9b5761';
+
+            // Realizar la solicitud HTTP
+            $response = Http::withHeaders(['Authorization' => $authorizationUiid])->get($endpoint);
 
             // Verificar si la respuesta fue exitosa
             if ($response->successful()) {
                 $data = $response->json();
                 $items = $data['data'][$dataKey] ?? []; // Obtener los datos dinámicamente
 
-                // Asegurarse de que los datos sean siempre un arreglo
+                // Normalizar los datos en un arreglo
                 if (isset($items['id'])) {
-                    // Si tiene 'id', asumimos que es un solo registro y lo convertimos en un array de un elemento
-                    $items = [$items];
+                    $items = [$items]; // Convertir un solo registro en un arreglo
                 }
 
+                // Procesar los datos si existen elementos
                 if (!empty($items)) {
                     foreach ($items as $item) {
-                        $processedFields = array_intersect_key($item, array_flip($fields));
+                        $processedFields = array_intersect_key($item, array_flip($fields)); // Filtrar campos permitidos
 
-                        // Procesar relaciones externas (por ejemplo, category_id)
+                        // Procesar relaciones externas
                         foreach ($relations as $field => $relatedModel) {
                             if (isset($item[$field])) {
-                                // Buscar el modelo relacionado por server_id
                                 $relatedInstance = $relatedModel::where('server_id', $item[$field])->first();
-                                $processedFields[$field] = $relatedInstance?->id; // Asignar el ID local si existe
+                                $processedFields[$field] = $relatedInstance?->id ?? null; // Asignar el ID local o null
                             }
+                        }
+
+                        // Si la relación branchoffice existe, asignar su ID
+                        if ($branchoffice !== null && !isset($processedFields['branchoffice_id'])) {
+                            $processedFields['branchoffice_id'] = $branchoffice->id;
                         }
 
                         // Crear o actualizar el modelo según el campo 'server_id'
                         $modelClass::updateOrCreate(
-                            ['server_id' => $item['id']], // Buscar por el campo 'server_id'
+                            ['server_id' => $item['id']], // Condición de búsqueda
                             array_merge(
                                 $processedFields, // Campos procesados
                                 ['server_id' => $item['id']]// Asignar el 'server_id'
@@ -153,19 +242,24 @@ class Api360Service
                     return [
                         'status' => true,
                         'message' => "Datos sincronizados correctamente para el modelo {$modelClass}.",
-                    ];
-                } else {
-                    return [
-                        'status' => false,
-                        'message' => "No se encontraron datos en la clave '{$dataKey}'.",
+                        'data' => $data['data'],
                     ];
                 }
-            } else {
+
+                // Manejo de caso sin datos
                 return [
                     'status' => false,
-                    'message' => 'La solicitud a la API no fue exitosa.',
+                    'message' => "No se encontraron datos en la clave '{$dataKey}'.",
+                    'data' => [],
                 ];
             }
+
+            // Manejo de respuesta no exitosa
+            return [
+                'status' => false,
+                'message' => 'La solicitud a la API no fue exitosa.',
+                'data' => [],
+            ];
         } catch (\Exception $e) {
             // Manejo de excepciones
             return [

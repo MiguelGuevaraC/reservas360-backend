@@ -32,7 +32,7 @@ public function toArray($request)
         'stock' => $this->stock,
         'price' => $this->price,
         'status' => $this->status,
-        'category' => $this->category ? new CategoryResource($this->category) : 'Sin Categoria',
+
     ];
 }
 }

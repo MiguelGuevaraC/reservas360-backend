@@ -10,5 +10,5 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::put('station/{id}', [StationController::class, 'update']);
     Route::delete('station/{id}', [StationController::class, 'destroy']);
 
-    Route::get('getdata-service', [StationController::class, 'getStationsData']);
+    Route::get('getdata-station', [StationController::class, 'getStationsData']);
 });

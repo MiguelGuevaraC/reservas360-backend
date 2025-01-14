@@ -23,8 +23,8 @@ class BranchofficeResource extends JsonResource
  *     @OA\Property(property="company_id", type="integer", example=5),
  * 
  
- *     @OA\Property(property="products", type="array", @OA\Items(ref="#/components/schemas/Product")),
- *     @OA\Property(property="services", type="array", @OA\Items(ref="#/components/schemas/Service")),
+ *     @OA\Property(property="categories", type="array", @OA\Items(ref="#/components/schemas/Category")),
+
  *     @OA\Property(property="environments", type="array", @OA\Items(ref="#/components/schemas/Environment")),
  * )
  */
@@ -42,8 +42,8 @@ class BranchofficeResource extends JsonResource
             'server_id' => $this->server_id,
             'company_id' => $this->company_id,
 
-            'products' =>  $this->products ? ProductResource::collection($this->products) : [],
-            'services' =>  $this->services ? ServiceResource::collection($this->services) : [],
+            'categories' =>  $this->categories ? CategoryResource::collection($this->categories) : [],
+
             'environments' =>  $this->environments ? EnvironmentResource::collection($this->environments) : [],
       
         

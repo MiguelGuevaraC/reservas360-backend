@@ -13,7 +13,7 @@ class Category extends Model
         'name',
         'status',
         'server_id',
-
+'branchoffice_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -34,6 +34,7 @@ class Category extends Model
         'name',
         'status',
         'server_id',
+        'branchoffice_id',
     ];
     /**
      * Campos de ordenación disponibles.
@@ -43,4 +44,13 @@ class Category extends Model
         'name' => 'desc',
         'id' => 'desc',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }

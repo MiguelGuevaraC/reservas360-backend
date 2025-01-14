@@ -67,4 +67,9 @@ class Branchoffice extends Model
     {
         return $this->hasMany(Environment::class);
     }
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+    
 }

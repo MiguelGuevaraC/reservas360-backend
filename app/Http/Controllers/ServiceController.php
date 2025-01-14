@@ -6,6 +6,7 @@ use App\Http\Requests\ServiceRequest\IndexServiceRequest;
 use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use App\Services\Api360Service;
+use App\Services\CategoryService;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
 
@@ -66,7 +67,7 @@ class ServiceController extends Controller
 
     public function index(IndexServiceRequest $request)
     {
-        $respuesta_actualizar_data = $this->getCategories($request);
+        $respuesta_actualizar_data = $this->getServiceData($request);
         return $this->getFilteredResults(
             Service::class,
             $request,
