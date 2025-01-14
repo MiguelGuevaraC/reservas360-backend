@@ -17,6 +17,7 @@ class Service extends Model
         'status',
 
         'server_id',
+        'category_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -45,13 +46,12 @@ class Service extends Model
 
     const getfields = [
         'name',
-        'name',
         'description',
         'price',
         'time_minutes',
         'status',
+        'category_id',
         'server_id',
-        'created_at',
     ];
 
 }
