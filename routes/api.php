@@ -27,4 +27,8 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     require __DIR__ . '/Api/CategoryApi.php'; //CATEGORY
     require __DIR__ . '/Api/ProductApi.php'; //PRODUCT
     require __DIR__ . '/Api/PersonApi.php'; //PERSON
+    require __DIR__ . '/Api/ServiceApi.php'; //SERVICE
+    require __DIR__ . '/Api/EnvironmentApi.php'; //ENVIRONMENT
+    require __DIR__ . '/Api/StationApi.php'; //STATION
+
 });
