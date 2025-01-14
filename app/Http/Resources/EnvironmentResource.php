@@ -31,7 +31,7 @@ class EnvironmentResource extends JsonResource
             'status' => $this->status,
             'server_id' => $this->server_id,
             'company_id' => $this->company_id,
-            'station' =>  $this->stations ? StationResource::collection($this->stations) : [],
+            'stations' =>  $this->stations ? StationResource::collection($this->stations) : [],
        
         ];
     }
