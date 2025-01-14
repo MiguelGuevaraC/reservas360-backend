@@ -87,7 +87,7 @@ class StationController extends Controller
      *     @OA\Response(response=422, description="Error de validación", @OA\JsonContent(type="object", @OA\Property(property="status", type="string", example="false"), @OA\Property(property="message", type="string", example="Error al obtener datos")))
      * )
      */
-    public function getEnvironmentData(Request $request)
+    public function getStationsData(Request $request)
     {
         $uuid = $request->input('uuid', '');
         $data = '';
