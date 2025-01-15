@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('stock')->nullable(); // Tipo de documento, puede ser nulo
             $table->string('price')->nullable(); // Tipo de documento, puede ser nulo
 
-            $table->string('status')->nullable(); // Tipo de documento, puede ser nulo
+            $table->string('status')->default('Activo'); // Estado
             $table->string('server_id')->nullable(); // id del servidor
             $table->foreignId('category_id')->nullable()->unsigned()
                 ->constrained('categories');

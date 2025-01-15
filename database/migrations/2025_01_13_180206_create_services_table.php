@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('price')->nullable();
             $table->string('time_minutes')->nullable();
 
-            $table->string('status')->nullable();
+            $table->string('status')->default('Activo'); // Estado
             $table->string('server_id')->nullable();
          
             $table->foreignId('category_id')->nullable()->unsigned()->constrained('categories');

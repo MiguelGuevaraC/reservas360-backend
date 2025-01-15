@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('telephone')->nullable(); // Teléfono, puede ser nulo
             $table->string('email')->unique(); // Correo electrónico, debe ser único
             
-            $table->enum('state', ['1', '0'])->default('1'); // Estado
+            $table->string('status')->default('Activo'); // Estado
             $table->string('server_id')->nullable(); // id del servidor
             $table->foreignId('company_id')->nullable()->unsigned()->constrained('companies');
             $table->timestamps(); // 'created_at' y 'updated_at'

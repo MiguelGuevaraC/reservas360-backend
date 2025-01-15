@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
 
-            $table->string('status')->nullable();
+            $table->string('status')->default('Activo'); // Estado
             $table->string('server_id')->nullable();
             $table->string('route')->nullable();
             $table->foreignId('environment_id')->nullable()->unsigned()->constrained('environments');

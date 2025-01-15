@@ -34,7 +34,7 @@ class CompanyResource extends JsonResource
             'phone' => $this->phone ?? "Sin teléfono",
             'telephone' => $this->telephone ?? "Sin teléfono",
             'email' => $this->email ?? "Sin correo",
-            'state' => $this->state,
+            'status' => $this->status,
             'server_id' => $this->server_id,
             'branchoffices' => $this->branchoffices ? BranchOfficeResource::collection($this->branchoffices) : [],
 

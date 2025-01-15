@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(); // Tipo de documento, puede ser nulo
             $table->string('server_id')->nullable(); // id del servidor
-            $table->string('status')->nullable(); // Tipo de documento, puede ser nulo
+            $table->string('status')->default('Activo'); // Estado
             $table->foreignId('branch_id')->nullable()->unsigned()->constrained('branchoffices');
             $table->timestamps();
             $table->softDeletes(); // Agrega el campo 'deleted_at' para el soft delete
