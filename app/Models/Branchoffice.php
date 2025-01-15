@@ -65,11 +65,11 @@ class Branchoffice extends Model
 
     public function environments()
     {
-        return $this->hasMany(Environment::class);
+        return $this->hasMany(Environment::class,'branch_id');
     }
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class,'branch_id');
     }
     
 }

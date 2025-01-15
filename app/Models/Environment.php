@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,11 +15,11 @@ class Environment extends Model
         'status',
         'server_id',
         'branch_id',
-        
+
         'created_at',
         'updated_at',
         'deleted_at',
-        
+
     ];
     protected $hidden = [
         'created_at',
@@ -28,20 +27,20 @@ class Environment extends Model
         'deleted_at',
     ];
     const filters = [
-        'name' => 'like',
-        'description' => 'like',
-        'route' => 'like',
-        'status' => 'like',
+        'name'              => 'like',
+        'description'       => 'like',
+        'route'             => 'like',
+        'status'            => 'like',
         'branchoffice.name' => 'like',
-        'branch_id' => '=',
+        'branch_id'         => '=',
     ];
 
     /**
      * Campos de ordenación disponibles.
      */
     const sorts = [
-        'id' => 'desc',
-        'name' => 'desc',
+        'id'          => 'desc',
+        'name'        => 'desc',
         'description' => 'desc',
 
     ];
@@ -56,5 +55,9 @@ class Environment extends Model
     public function branchoffice()
     {
         return $this->belongsTo(Branchoffice::class, 'branch_id');
+    }
+    public function stations()
+    {
+        return $this->hasMany(Station::class, 'environment_id');
     }
 }
