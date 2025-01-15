@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +12,7 @@ class Category extends Model
         'name',
         'status',
         'server_id',
-'branchoffice_id',
+        'branch_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -25,16 +24,15 @@ class Category extends Model
         'deleted_at',
     ];
     const filters = [
-        'name' => 'like',
+        'name'   => 'like',
         'status' => 'like',
     ];
-
 
     const getfields = [
         'name',
         'status',
         'server_id',
-        'branchoffice_id',
+        'branch_id',
     ];
     /**
      * Campos de ordenación disponibles.
@@ -42,7 +40,7 @@ class Category extends Model
     const sorts = [
 
         'name' => 'desc',
-        'id' => 'desc',
+        'id'   => 'desc',
     ];
 
     public function products()

@@ -31,7 +31,6 @@ class StationResource extends JsonResource
             'server_id' => $this->server_id,
             'route' => $this->route,
             'environment_id' => $this->environment_id,
-            // 'environment' => $this->environment ? new EnvironmentResource($this->environment) : 'Sin Ambiente',
         ];
     }
 

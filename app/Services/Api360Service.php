@@ -62,7 +62,7 @@ class Api360Service
                     Category::getfields,
                     $uuid,
                     $branchOffice,
-                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                    ['branch_id' => Branchoffice::class]// Relación dinámica
                 );
             } else {
                 return [
@@ -125,7 +125,7 @@ class Api360Service
                     Station::getfields,
                     $uuid,
                     $branchOffice,
-                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                    ['branch_id' => Branchoffice::class]// Relación dinámica
                 );
             } else {
                 return [
@@ -164,7 +164,7 @@ class Api360Service
                     Environment::getfields,
                     $uuid,
                     $branchOffice,
-                    ['branchoffice_id' => Branchoffice::class]// Relación dinámica
+                    ['branch_id' => Branchoffice::class]// Relación dinámica
                 );
             } else {
                 return [
@@ -225,8 +225,8 @@ class Api360Service
                         }
 
                         // Si la relación branchoffice existe, asignar su ID
-                        if ($branchoffice !== null && !isset($processedFields['branchoffice_id'])) {
-                            $processedFields['branchoffice_id'] = $branchoffice->id;
+                        if ($branchoffice !== null && !isset($processedFields['branch_id'])) {
+                            $processedFields['branch_id'] = $branchoffice->id;
                         }
 
                         // Crear o actualizar el modelo según el campo 'server_id'

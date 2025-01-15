@@ -66,7 +66,7 @@ class UserController extends Controller
      *         required=true,
      *         description="User credentials",
      *         @OA\JsonContent(
-     *             required={"username", "password", "branchOffice_id"},
+     *             required={"username", "password", "branch_id"},
      *             @OA\Property(property="email", type="string", example="miguel@gmail.com"),
      *             @OA\Property(property="password", type="string", format="password", example="password"),
 

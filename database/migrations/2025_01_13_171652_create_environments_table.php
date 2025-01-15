@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('route')->nullable();
             $table->string('status')->nullable();
             $table->string('server_id')->nullable();
-            $table->foreignId('branchoffice_id')->nullable()->unsigned()->constrained('branchoffices');
+            $table->foreignId('branch_id')->nullable()->unsigned()->constrained('branchoffices');
             $table->softDeletes();
             $table->timestamps();
         });

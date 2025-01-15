@@ -561,6 +561,24 @@
                         }
                     },
                     {
+                        "name": "branch$name",
+                        "in": "query",
+                        "description": "Filtrar por nombre de Sucursal",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "branch_id",
+                        "in": "query",
+                        "description": "Filtrar por id Sucursal",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "from",
                         "in": "query",
                         "description": "Fecha de inicio",
@@ -954,18 +972,18 @@
                         }
                     },
                     {
-                        "name": "company$business_name",
+                        "name": "branch$name",
                         "in": "query",
-                        "description": "Filtrar por nombre de empresa",
+                        "description": "Filtrar por nombre de Sucursal",
                         "required": false,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "company_id",
+                        "name": "branch_id",
                         "in": "query",
-                        "description": "Filtrar por id Empresa",
+                        "description": "Filtrar por id Sucursal",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -1475,7 +1493,7 @@
                     "Api360"
                 ],
                 "summary": "Actualizar Categorias la data de la api Externa",
-                "operationId": "7552e15440867d509df928e7741c5de1",
+                "operationId": "888528ac6c31327b412ba9daf3edd40a",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -1894,7 +1912,7 @@
                     "Api360"
                 ],
                 "summary": "Actualizar información de Estaciones desde API externa",
-                "operationId": "c1edc89203803cf559dddd39b5f0ad81",
+                "operationId": "8cfba54da1b846c2754ec8b80321751a",
                 "parameters": [
                     {
                         "name": "uuid",
@@ -2025,7 +2043,7 @@
                                 "required": [
                                     "username",
                                     "password",
-                                    "branchOffice_id"
+                                    "branch_id"
                                 ],
                                 "properties": {
                                     "email": {
@@ -2313,16 +2331,10 @@
                         "type": "integer",
                         "example": 5
                     },
-                    "products": {
+                    "categories": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/Product"
-                        }
-                    },
-                    "services": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Service"
+                            "$ref": "#/components/schemas/Category"
                         }
                     },
                     "environments": {
@@ -2349,6 +2361,22 @@
                     "status": {
                         "type": "string",
                         "example": "true"
+                    },
+                    "branch_id": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "products": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "services": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Service"
+                        }
                     }
                 },
                 "type": "object"
@@ -2431,7 +2459,7 @@
                         "type": "integer",
                         "example": 10
                     },
-                    "company_id": {
+                    "branch_id": {
                         "type": "integer",
                         "example": 3
                     },

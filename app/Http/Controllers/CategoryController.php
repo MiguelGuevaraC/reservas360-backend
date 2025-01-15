@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest\IndexCategoryRequest;
@@ -19,7 +18,7 @@ class CategoryController extends Controller
     public function __construct(CategoryService $categoryService, Api360Service $api360Service)
     {
         $this->categoryService = $categoryService;
-        $this->api360Service = $api360Service;
+        $this->api360Service   = $api360Service;
 
     }
 /**
@@ -49,6 +48,8 @@ class CategoryController extends Controller
      *     tags={"Category"},
      *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(name="name", in="query", description="Filtrar por nombre de la categoria", required=false, @OA\Schema(type="string")),
+     *     @OA\Parameter(name="branch$name", in="query", description="Filtrar por nombre de Sucursal", required=false, @OA\Schema(type="string")),
+     *     @OA\Parameter(name="branch_id", in="query", description="Filtrar por id Sucursal", required=false, @OA\Schema(type="string")),
 
      *     @OA\Parameter(name="from", in="query", description="Fecha de inicio", required=false, @OA\Schema(type="string", format="date")),
      *     @OA\Parameter(name="to", in="query", description="Fecha de fin", required=false, @OA\Schema(type="string", format="date")),
@@ -85,7 +86,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryService->getCategoryById($id);
 
-        if (!$category) {
+        if (! $category) {
             return response()->json([
                 'error' => 'Categoria no encontrada',
             ], 404);

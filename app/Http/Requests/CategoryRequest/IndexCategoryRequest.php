@@ -27,6 +27,8 @@ class IndexCategoryRequest extends IndexRequest
             'uuid' => 'nullable|string',
             'name' => 'nullable|string',
             'brand_name' => 'nullable|string',
+            'branch_id' => 'nullable|string',
+            'branch.name' => 'nullable|string',
             'from' => 'nullable|date',
             'to' => 'nullable|date',
 

@@ -15,7 +15,8 @@ class Environment extends Model
         'route',
         'status',
         'server_id',
-        'branchoffice_id',
+        'branch_id',
+        
         'created_at',
         'updated_at',
         'deleted_at',
@@ -32,7 +33,7 @@ class Environment extends Model
         'route' => 'like',
         'status' => 'like',
         'branchoffice.name' => 'like',
-        'branchoffice_id' => '=',
+        'branch_id' => '=',
     ];
 
     /**
@@ -50,10 +51,10 @@ class Environment extends Model
         'route',
         'status',
         'server_id',
-        'branchoffice_id',
+        'branch_id',
     ];
     public function branchoffice()
     {
-        return $this->belongsTo(Branchoffice::class, 'branchoffice_id');
+        return $this->belongsTo(Branchoffice::class, 'branch_id');
     }
 }

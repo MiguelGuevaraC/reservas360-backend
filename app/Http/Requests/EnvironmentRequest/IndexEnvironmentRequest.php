@@ -31,7 +31,8 @@ class IndexEnvironmentRequest extends IndexRequest
             'route' => 'nullable|string',
             'status' => 'nullable|string',
 
-            'company$business_name' => 'nullable|string',
+            'branch$name' => 'nullable|string',
+            'branch_id' => 'nullable|string',
 
         ];
     }
