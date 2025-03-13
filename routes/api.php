@@ -32,3 +32,5 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     require __DIR__ . '/Api/StationApi.php'; //STATION
 
 });
+Route::post('send-token', [UserController::class, 'send_token_sign_up']);
+Route::post('sign-up', [UserController::class, 'validate_mail']);
