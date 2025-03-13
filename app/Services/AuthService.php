@@ -2,12 +2,15 @@
 
 namespace App\Services;
 
+use App\Mail\SendTokenMail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthService
 {
@@ -110,5 +113,39 @@ class AuthService
         return response()->json([
             "message" => "Se cerró sesión Exitosamente",
         ]);
+    }
+
+
+    // ----------------------------------------------
+    public function validate_token($email, $token_form)
+    {
+        $cachedToken = Cache::get("email_verification_token:{$email}");
+        if ($cachedToken !== $token_form) {
+            return false;
+        }
+        return true;
+    }
+    public function sendTokenByApi($number_phone, $token)
+    {
+        return "envio de codigo por telefono";
+    }
+
+    public function sendTokenByEmail($names, $email, $token)
+    {
+        Mail::to($email)->send(new SendTokenMail($token));
+    }
+
+    public function sendToken($data)
+    {
+        $token = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); // Token de 4 dígitos
+
+        Cache::put("email_verification_token:{$data['email']}", $token, 600);
+
+        if ($data['send_by'] == 'api') {
+            return $this->sendTokenByApi($data['phone'], $token);
+        }
+        if ($data['send_by'] == 'email') {
+            return $this->sendTokenByEmail($data['names'],$data['email'], $token);
+        }
     }
 }

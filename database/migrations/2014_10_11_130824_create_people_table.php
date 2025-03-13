@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('people', function (Blueprint $table) {
             $table->id(); // Genera una columna 'id' autoincremental
             $table->string('typeofDocument')->nullable(); // Tipo de documento, puede ser nulo
-            $table->string('documentNumber')->unique(); // Número de documento, debe ser único
+            $table->string('documentNumber')->nullable(); // Número de documento, debe ser único
             $table->string('names')->nullable(); // Nombres
             $table->string('fathersurname')->nullable(); // Apellido del padre
             $table->string('mothersurname')->nullable(); // Apellido de la madre
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('email')->unique(); // Correo electrónico, debe ser único
             $table->string('origin')->nullable(); // Origen, puede ser nulo
             $table->string('ocupation')->nullable(); // Ocupación, puede ser nulo
-            $table->enum('state', ['1', '0'])->default('1'); // Estado, por defecto 'active'
+            $table->enum('state', ['1', '0'])->default('1')->nullable(); // Estado, por defecto 'active'
             $table->string('server_id')->nullable(); // id del servidor
             $table->timestamps(); // 'created_at' y 'updated_at'
             $table->softDeletes(); // Agrega el campo 'deleted_at' para el soft delete

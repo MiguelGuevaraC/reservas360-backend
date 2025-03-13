@@ -39,7 +39,6 @@ class Station extends Model
         'id' => 'desc',
         'name' => 'desc',
         'description' => 'desc',
-
     ];
 
     const getfields = [
