@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,15 +26,15 @@ class CompanyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'ruc' => $this->ruc ?? "Sin RUC",
-            'name' => $this->name ?? "Sin nombre",
-            'address' => $this->address ?? "Sin dirección",
-            'phone' => $this->phone ?? "Sin teléfono",
-            'telephone' => $this->telephone ?? "Sin teléfono",
-            'email' => $this->email ?? "Sin correo",
-            'status' => $this->status,
-            'server_id' => $this->server_id,
+            'id'            => $this->id ?? null,
+            'ruc'           => $this->ruc ?? null,
+            'name'          => $this->name ?? null,
+            'address'       => $this->address ?? null,
+            'phone'         => $this->phone ?? null,
+            'telephone'     => $this->telephone ?? null,
+            'email'         => $this->email ?? null,
+            'status'        => $this->status ?? null,
+            'server_id'     => $this->server_id ?? null,
             'branchoffices' => $this->branchoffices ? BranchOfficeResource::collection($this->branchoffices) : [],
 
         ];

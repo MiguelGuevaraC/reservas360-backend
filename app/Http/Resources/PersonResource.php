@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PersonResource extends JsonResource
 {
-   
+
 /**
  * @OA\Schema(
  *     schema="Person",
@@ -109,23 +108,23 @@ class PersonResource extends JsonResource
  *     ),
  * )
  */
-public function toArray($request)
-{
-    return [
-        'id' => $this->id,
-        'type_of_document' => $this->typeofDocument, // Renombrado para consistencia con formato snake_case
-        'document_number' => $this->documentNumber,
-        'names' => $this->names,
-        'father_surname' => $this->fathersurname,
-        'mother_surname' => $this->mothersurname,
-        'business_name' => $this->businessName,
-        'address' => $this->address,
-        'phone' => $this->phone,
-        'email' => $this->email,
-        'origin' => $this->origin,
-        'occupation' => $this->ocupation, // Corrección de typo: 'ocupation' -> 'occupation'
-        'state' => $this->state,
-        'server_id' => $this->server_id,
-    ];
-}
+    public function toArray($request)
+    {
+        return [
+            'id'               => $this->id ?? null,
+            'type_of_document' => $this->typeofDocument ?? null, // Renombrado para consistencia con formato snake_case
+            'document_number'  => $this->documentNumber ?? null,
+            'names'            => $this->names ?? null,
+            'father_surname'   => $this->fathersurname ?? null,
+            'mother_surname'   => $this->mothersurname ?? null,
+            'business_name'    => $this->businessName ?? null,
+            'address'          => $this->address ?? null,
+            'phone'            => $this->phone ?? null,
+            'email'            => $this->email ?? null,
+            'origin'           => $this->origin ?? null,
+            'occupation'       => $this->ocupation ?? null, // Corrección de typo: 'ocupation' -> 'occupation'
+            'state'            => $this->state ?? null,
+            'server_id'        => $this->server_id ?? null,
+        ];
+    }
 }

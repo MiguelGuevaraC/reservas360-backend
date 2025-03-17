@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,8 +20,8 @@ class BranchofficeResource extends JsonResource
  *     @OA\Property(property="email", type="string", example="example@domain.com"),
  *     @OA\Property(property="server_id", type="integer", example=10),
  *     @OA\Property(property="company_id", type="integer", example=5),
- * 
- 
+ *
+
  *     @OA\Property(property="categories", type="array", @OA\Items(ref="#/components/schemas/Category")),
 
  *     @OA\Property(property="environments", type="array", @OA\Items(ref="#/components/schemas/Environment")),
@@ -31,22 +30,21 @@ class BranchofficeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id ?? '',
-            'brand_name' => $this->brand_name ?? 'Sin Marca',
-            'ruc' => $this->ruc ?? 'Sin Ruc',
-            'name' => $this->name ?? 'Sin Nombre',
-            'address' => $this->address ?? 'Sin Dirección',
-            'phone' => $this->phone ?? 'Sin Telefono',
-            'telephone' => $this->telephone ?? 'Sin Telefono',
-            'email' => $this->email ?? 'Sin Correo',
-            'server_id' => $this->server_id,
-            'company_id' => $this->company_id,
+            'id'           => $this->id ?? null,
+            'brand_name'   => $this->brand_name ?? null,
+            'ruc'          => $this->ruc ?? null,
+            'name'         => $this->name ?? null,
+            'address'      => $this->address ?? null,
+            'phone'        => $this->phone ?? null,
+            'telephone'    => $this->telephone ?? null,
+            'email'        => $this->email ?? null,
+            'server_id'    => $this->server_id ?? null,
+            'company_id'   => $this->company_id ?? null,
+            'company_name' => $this->company->name ?? null,
+            'categories'   => $this->categories ? CategoryResource::collection($this->categories) : [],
 
-            'categories' =>  $this->categories ? CategoryResource::collection($this->categories) : [],
+            'environments' => $this->environments ? EnvironmentResource::collection($this->environments) : [],
 
-            'environments' =>  $this->environments ? EnvironmentResource::collection($this->environments) : [],
-      
-        
         ];
     }
 

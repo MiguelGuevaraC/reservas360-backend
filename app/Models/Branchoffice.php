@@ -33,6 +33,7 @@ class Branchoffice extends Model
     const filters = [
         'name' => 'like',
         'address' => 'like',
+        'company_id' => '=',
         'company.numberDocument' => 'like',
         'company.busisnessName' => 'like',
     ];

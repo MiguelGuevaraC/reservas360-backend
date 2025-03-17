@@ -34,6 +34,7 @@ class Service extends Model
         'price' => 'like',
         'time_minutes' => 'like',
         'status' => 'like',
+        'category_id' => '=',
     ];
 
     /**
@@ -53,5 +54,8 @@ class Service extends Model
         'category_id',
         'server_id',
     ];
-
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

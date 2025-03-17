@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,13 +23,13 @@ class StationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name ?? 'Sin Nombre',
-            'description' => $this->description ?? 'Sin Descripción',
-            'status' => $this->status ?? 'Sin Estado',
-            'server_id' => $this->server_id,
-            'route' => $this->route,
-            'environment_id' => $this->environment_id,
+            'id'             => $this->id ?? null,
+            'name'           => $this->name ?? null,
+            'description'    => $this->description ?? null,
+            'status'         => $this->status ?? null,
+            'server_id'      => $this->server_id ?? null,
+            'route'          => $this->route ?? null,
+            'environment_id' => $this->environment_id ?? null,
         ];
     }
 

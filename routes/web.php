@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('view_token_email', [UserController::class, 'view_token_email']);
+// Route::get('view_token_email', [UserController::class, 'view_token_email']);

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,21 +17,21 @@ class EnvironmentResource extends JsonResource
      *     @OA\Property(property="status", type="boolean", example=true),
      *     @OA\Property(property="server_id", type="integer", example=10),
      *     @OA\Property(property="branch_id", type="integer", example=3),
-  *     @OA\Property(property="stations", type="array", @OA\Items(ref="#/components/schemas/Station"))
+     *     @OA\Property(property="stations", type="array", @OA\Items(ref="#/components/schemas/Station"))
      * )
      */
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name ?? 'Sin Nombre',
-            'description' => $this->description ?? 'Sin Descripción',
-            'route' => $this->route,
-            'status' => $this->status,
-            'server_id' => $this->server_id,
-            'branch_id' => $this->branch_id,
-            'stations' =>  $this->stations ? StationResource::collection($this->stations) : [],
-       
+            'id'          => $this->id ?? null,
+            'name'        => $this->name ?? null,
+            'description' => $this->description ?? null,
+            'route'       => $this->route ?? null,
+            'status'      => $this->status ?? null,
+            'server_id'   => $this->server_id ?? null,
+            'branch_id'   => $this->branch_id ?? null,
+            'stations'    => $this->stations ? StationResource::collection($this->stations) : [],
+
         ];
     }
 
